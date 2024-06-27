@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'verification.dart';
-import 'login.dart'; 
+import 'login.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -11,9 +12,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Register App',
       home: RegisterPage(),
-      routes: {
-        
-      },
+      routes: {},
     );
   }
 }
@@ -62,7 +61,7 @@ class RegisterPage extends StatelessWidget {
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(0),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -76,7 +75,7 @@ class RegisterPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromRGBO(225, 95, 27,.3),
+                                      color: Color.fromRGBO(225, 95, 27, .3),
                                       blurRadius: 20,
                                       offset: Offset(0, 10))
                                 ]),
@@ -189,7 +188,8 @@ class RegisterPage extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => LoginPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
                               );
                             },
                             child: Text(
@@ -200,30 +200,31 @@ class RegisterPage extends StatelessWidget {
                       SizedBox(
                         height: 40,
                       ),
-                        FadeInUp(
-  duration: Duration(milliseconds: 1600),
-  child: MaterialButton(
-    onPressed: () {
-      Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => VerificationPage()),
-      );
-    },
-    height: 50,
-    color: Colors.orange[900],
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(50),
-    ),
-    child: Center(
-      child: Text(
-        "Register",
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  ),
-),
+                      FadeInUp(
+                        duration: Duration(milliseconds: 1600),
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => VerificationPage()),
+                            );
+                          },
+                          height: 50,
+                          color: Colors.orange[900],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Register",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 50,
                       ),
@@ -248,7 +249,6 @@ class RegisterPage extends StatelessWidget {
     );
   }
 }
-
 
 class BirthDatePicker extends StatefulWidget {
   @override
@@ -298,4 +298,3 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
     );
   }
 }
-

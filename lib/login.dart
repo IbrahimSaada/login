@@ -57,7 +57,7 @@ class LoginPage extends StatelessWidget {
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: EdgeInsets.all(10),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
@@ -208,7 +208,7 @@ class LoginPage extends StatelessWidget {
                                   color: Colors.black,
                                   child: Center(
                                     child: Text(
-                                      "Github",
+                                      "Google",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),

@@ -29,43 +29,42 @@ class RegisterPage extends StatelessWidget {
           Colors.orange.shade800,
           Colors.orange.shade400
         ])),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 80,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FadeInUp(
+                      duration: Duration(milliseconds: 1000),
+                      child: Text(
+                        "Register",
+                        style: TextStyle(color: Colors.white, fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    FadeInUp(
-                        duration: Duration(milliseconds: 1000),
-                        child: Text(
-                          "Register",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
+            ),
+            Expanded(
+              child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(0),
+                  padding: EdgeInsets.all(20),
                   child: Column(
                     children: <Widget>[
                       SizedBox(
-                        height: 60,
+                        height: 10,
                       ),
                       FadeInUp(
                           duration: Duration(milliseconds: 1400),
@@ -89,21 +88,7 @@ class RegisterPage extends StatelessWidget {
                                               color: Colors.grey.shade200))),
                                   child: TextField(
                                     decoration: InputDecoration(
-                                        hintText: "First Name",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: TextField(
-                                    decoration: InputDecoration(
-                                        hintText: "Last Name",
+                                        hintText: "Full Name",
                                         hintStyle:
                                             TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
@@ -202,7 +187,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       FadeInUp(
                         duration: Duration(milliseconds: 1600),
-                        child: MaterialButton(
+child: MaterialButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -225,25 +210,12 @@ class RegisterPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 50,
-                      ),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(
-                            width: 30,
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -265,7 +237,7 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
       firstDate: DateTime(1900),
       lastDate: DateTime(2006, 12, 31),
     );
-    if (picked != null && picked != DateTime.now()) {
+    if (picked!= null && picked!= DateTime.now()) {
       setState(() {
         _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });

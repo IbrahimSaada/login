@@ -19,38 +19,38 @@ class LoginPage extends StatelessWidget {
           Colors.orange.shade800,
           Colors.orange.shade400
         ])),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 80,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(
+              height: 1,
+            ),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FadeInUp(
+                      duration: Duration(milliseconds: 1000),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white, fontSize: 40),
+                      )),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  FadeInUp(
+                      duration: Duration(milliseconds: 1300),
+                      child: Text(
+                        "Welcome Back",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      )),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    FadeInUp(
-                        duration: Duration(milliseconds: 1000),
-                        child: Text(
-                          "Login",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        )),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    FadeInUp(
-                        duration: Duration(milliseconds: 1300),
-                        child: Text(
-                          "Welcome Back",
-                          style: TextStyle(color: Colors.white, fontSize: 18),
-                        )),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
+            ),
+            SizedBox(height: 20),
+            Expanded(
+              child: Container(
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -221,9 +221,9 @@ class LoginPage extends StatelessWidget {
                     ],
                   ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );

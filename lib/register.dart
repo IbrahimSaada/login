@@ -1,7 +1,10 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'verification.dart';
+import 'Verification.dart';
 import 'login.dart';
+
+import 'package:intl/intl.dart';
+ // Add this line
 
 void main() => runApp(MyApp());
 
@@ -74,7 +77,7 @@ class RegisterPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 boxShadow: [
                                   BoxShadow(
-                                      color: Color.fromRGBO(225, 95, 27, .3),
+                                      color: Color.fromRGBO(225, 95, 27,.3),
                                       blurRadius: 20,
                                       offset: Offset(0, 10))
                                 ]),
@@ -135,7 +138,7 @@ class RegisterPage extends StatelessWidget {
                                       border: InputBorder.none,
                                     ),
                                     items: <String>['Male', 'Female', 'Other']
-                                        .map((String value) {
+                                       .map((String value) {
                                       return DropdownMenuItem<String>(
                                         value: value,
                                         child: Text(value),
@@ -186,8 +189,8 @@ class RegisterPage extends StatelessWidget {
                         height: 40,
                       ),
                       FadeInUp(
-                        duration: Duration(milliseconds: 1600),
-child: MaterialButton(
+duration: Duration(milliseconds: 1600),
+                        child: MaterialButton(
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
@@ -222,54 +225,44 @@ child: MaterialButton(
   }
 }
 
-
 class BirthDatePicker extends StatefulWidget {
   @override
   _BirthDatePickerState createState() => _BirthDatePickerState();
 }
 
 class _BirthDatePickerState extends State<BirthDatePicker> {
-  DateTime? _selectedDate;
-  final TextEditingController _dateController = TextEditingController();
+  DateTime _selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2006, 12, 31),
-    );
-    if (picked != null) {
+        context: context,
+        initialDate: _selectedDate,
+        firstDate: DateTime(1900),
+        lastDate: DateTime(2006));
+    if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: Colors.grey.shade200,
+   
+    return GestureDetector(
+      onTap: () {
+        _selectDate(context);
+      },
+      child: AbsorbPointer(
+        child: TextFormField(
+          decoration: InputDecoration(
+            hintText: DateFormat.yMMMMd('en_US').format(_selectedDate),
+            hintStyle: TextStyle(color: Colors.grey),
+            border: InputBorder.none,
+            suffixIcon: Icon(Icons.calendar_today),
           ),
+          readOnly: true,
         ),
-      ),
-      child: TextField(
-        controller: _dateController,
-        readOnly: true,
-        decoration: InputDecoration(
-          hintText: "Date of Birth",
-          hintStyle: TextStyle(color: Colors.grey),
-          border: InputBorder.none,
-          suffixIcon: Icon(Icons.calendar_today),
-        ),
-        onTap: () {
-          _selectDate(context);
-        },
       ),
     );
   }

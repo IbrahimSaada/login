@@ -222,23 +222,26 @@ child: MaterialButton(
   }
 }
 
+
 class BirthDatePicker extends StatefulWidget {
   @override
   _BirthDatePickerState createState() => _BirthDatePickerState();
 }
 
 class _BirthDatePickerState extends State<BirthDatePicker> {
-  TextEditingController _dateController = TextEditingController();
+  DateTime? _selectedDate;
+  final TextEditingController _dateController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: _selectedDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime(2006, 12, 31),
     );
-    if (picked!= null && picked!= DateTime.now()) {
+    if (picked != null) {
       setState(() {
+        _selectedDate = picked;
         _dateController.text = "${picked.toLocal()}".split(' ')[0];
       });
     }
@@ -247,7 +250,7 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -262,6 +265,7 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
           hintText: "Date of Birth",
           hintStyle: TextStyle(color: Colors.grey),
           border: InputBorder.none,
+          suffixIcon: Icon(Icons.calendar_today),
         ),
         onTap: () {
           _selectDate(context);

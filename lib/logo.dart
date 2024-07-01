@@ -24,7 +24,8 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -43,7 +44,9 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     Timer(Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginPage()), // Use Login instead of LoginPage
+        MaterialPageRoute(
+            builder: (context) =>
+                LoginPage()), // Use Login instead of LoginPage
       );
     });
   }
@@ -60,7 +63,8 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
       body: FadeTransition(
         opacity: _animation,
         child: Center(
-          child: Image.asset('assets/lib/logo.png'), // Make sure to add your image to the assets folder
+          child: Image.asset(
+              'assets/realistic logo.png'), // Make sure to add your image to the assets folder
         ),
       ),
     );

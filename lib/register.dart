@@ -238,7 +238,7 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
         context: context,
         initialDate: _selectedDate,
         firstDate: DateTime(1900),
-        lastDate: DateTime(2006));
+        lastDate: DateTime(2006,12,31));
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -264,6 +264,8 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
           readOnly: true,
         ),
       ),
+
+
     );
   }
 }

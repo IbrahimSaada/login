@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
+// logo.dart
+import 'package:flutter/material.dart';import 'package:flutter/material.dart';
 import 'dart:async';
 import 'login.dart'; // Assuming the class name is Login in this file
 
-void main() {
-   debugShowCheckedModeBanner: false,
-  runApp(MyApp());
-}
-
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
+    ));
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

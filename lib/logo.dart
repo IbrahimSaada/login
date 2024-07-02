@@ -3,6 +3,7 @@ import 'dart:async';
 import 'login.dart'; // Assuming the class name is Login in this file
 
 void main() {
+   debugShowCheckedModeBanner: false,
   runApp(MyApp());
 }
 

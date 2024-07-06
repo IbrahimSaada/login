@@ -1,5 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:login2/login/forgotpasswrod.dart';
 import '../login/register.dart';
 import '../home/home.dart';
 void main() => runApp(MaterialApp(
@@ -157,11 +158,19 @@ duration: Duration(milliseconds: 1600),
                       SizedBox(
                         height: 40,
                       ),
-                      FadeInUp(
+                     FadeInUp(
                           duration: Duration(milliseconds: 1500),
-                          child: Text(
-                            "Forgot Password?",
-                            style: TextStyle(color: Colors.grey),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                    builder: (context) => ForgotpasswrodhomePage()),
+                              );
+                            },
+                            child: Text(
+                              "Forgot Password?",
+                              style: TextStyle(color: Colors.grey),
+                            ),
                           )),
                       SizedBox(
                         height: 50,

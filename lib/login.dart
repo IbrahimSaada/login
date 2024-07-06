@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:login2/register.dart';
-
+import 'home.dart';
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),
@@ -112,27 +112,31 @@ class LoginPage extends StatelessWidget {
                       SizedBox(
                         height: 40,
                       ),
-                      FadeInUp(
-                          duration: Duration(milliseconds: 1600),
-                          child: MaterialButton(
-                            onPressed: () {},
-                            height: 50,
-                            // margin: EdgeInsets.symmetric(horizontal: 50),
-                            color: Colors.orange[900],
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            // decoration: BoxDecoration(
-                            // ),
-                            child: Center(
-                              child: Text(
-                                "Login",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
+              FadeInUp(
+duration: Duration(milliseconds: 1600),
+                        child: MaterialButton(
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                  builder: (context) => homePage()),
+                            );
+                          },
+                          height: 50,
+                          color: Colors.orange[900],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Login",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          )),
+                          ),
+                        ),
+                      ),
                       SizedBox(
                         height: 40,
                       ),

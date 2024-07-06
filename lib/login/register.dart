@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'Verification.dart';
-import 'login.dart';
+import '../login/verification.dart';
+import '../login/login.dart';
 
 import 'package:intl/intl.dart';
  // Add this line

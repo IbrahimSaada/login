@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:login2/register.dart';
-import 'home.dart';
+import '../login/register.dart';
+import '../home/home.dart';
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginPage(),

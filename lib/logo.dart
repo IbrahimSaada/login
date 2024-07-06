@@ -1,7 +1,7 @@
 // logo.dart
 import 'package:flutter/material.dart';import 'package:flutter/material.dart';
 import 'dart:async';
-import 'login.dart'; // Assuming the class name is Login in this file
+import 'login/login.dart'; // Assuming the class name is Login in this file
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,

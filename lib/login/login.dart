@@ -1,8 +1,9 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
+import 'package:login2/home/home.dart';
 import 'package:login2/login/forgotpasswrod.dart';
 import '../login/register.dart';
-import '../home.dart'; // Import HomePage
+import '../home/home.dart'; // Import HomePage
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -129,7 +130,7 @@ class LoginPage extends StatelessWidget {
                           onPressed: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => HomePage(),
+                                builder: (context) => homePage(),
                               ),
                             );
                           },

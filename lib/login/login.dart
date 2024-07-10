@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:login2/home/home.dart';
 import 'package:login2/login/forgotpasswrod.dart';
 import '../login/register.dart';
-import '../home/home.dart'; // Import HomePage
+// Import HomePage
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,

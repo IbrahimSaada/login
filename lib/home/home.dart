@@ -115,23 +115,23 @@ class _homePageState extends State<homePage> {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   makeStory(
-                      storyImage: 'assets/images/story/story-1.jpg',
-                      userImage: 'assets/images/aatik-tasneem.jpg',
+                      storyImage: '../assets/1.jpg',
+                      userImage: '../assets/1.jpg',
                       userName: 'Aatik Tasneem'),
                   SizedBox(width: 10), // Add space between stories
                   makeStory(
-                      storyImage: 'assets/images/story/story-3.jpg',
-                      userImage: 'assets/images/aiony-haust.jpg',
+                      storyImage: '../assets/2.jpg',
+                      userImage: '../assets/2.jpg',
                       userName: 'Aiony Haust'),
                   SizedBox(width: 10), // Add space between stories
                   makeStory(
-                      storyImage: 'assets/images/story/story-4.jpg',
-                      userImage: 'assets/images/averie-woodard.jpg',
+                      storyImage: '../assets/3.jpg',
+                      userImage: '../assets/3.jpg',
                       userName: 'Averie Woodard'),
                   SizedBox(width: 10), // Add space between stories
                   makeStory(
-                      storyImage: 'assets/images/story/story-5.jpg',
-                      userImage: 'assets/images/azamat-zhanisov.jpg',
+                      storyImage: '../assets/4.jpg',
+                      userImage: '../assets/4.jpg',
                       userName: 'Azamat Zhanisov'),
                 ],
               ),

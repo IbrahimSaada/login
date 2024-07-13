@@ -3,9 +3,11 @@ import 'dart:convert';
 import '../models/user_model.dart';
 
 class UserService {
+  final String baseUrl = 'https://localhost:7002/api/Users';
+
   Future<void> registerUser(UserModel user) async {
     final response = await http.post(
-      Uri.parse('https://localhost:7002/api/Users/register'),
+      Uri.parse('$baseUrl/register'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -19,21 +21,38 @@ class UserService {
       }),
     );
 
-    if (response.statusCode == 201) {
-      // Registration successful
+    if (response.statusCode != 201) {
+      throw Exception('Failed to register user: ${response.body}');
+    }
+  }
+
+  Future<bool> emailExists(String email) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/email-exists/$email'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return response.body == 'true';
     } else {
-      // Registration failed
-      String errorMessage;
-      try {
-        final errorResponse = jsonDecode(response.body);
-        errorMessage = errorResponse['title'] ?? 'Unknown error';
-        if (errorResponse['errors'] != null) {
-          errorMessage = errorResponse['errors'].values.join('\n');
-        }
-      } catch (e) {
-        errorMessage = 'Failed to register user';
-      }
-      throw Exception(errorMessage);
+      throw Exception('Failed to check email: ${response.body}');
+    }
+  }
+
+  Future<bool> phoneExists(String phoneNumber) async {
+    final response = await http.get(
+      Uri.parse('$baseUrl/phone-exists/$phoneNumber'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      return response.body == 'true';
+    } else {
+      throw Exception('Failed to check phone number: ${response.body}');
     }
   }
 }

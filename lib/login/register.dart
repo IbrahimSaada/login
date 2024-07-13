@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../login/verification.dart';
 import '../login/login.dart';
-import '../models/user_model.dart';
-import '../services/user_service.dart';
+import '../models/user_model.dart'; // Make sure this path is correct
+import '../services/user_service.dart'; // Make sure this path is correct
 
 class RegisterPage extends StatefulWidget {
   @override
@@ -19,7 +19,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   String? _gender;
   DateTime _dob = DateTime.now();
-  String _errorMessage = '';
+
+  String _emailError = '';
+  String _phoneError = '';
+  String _generalError = '';
 
   @override
   Widget build(BuildContext context) {
@@ -112,22 +115,40 @@ class _RegisterPageState extends State<RegisterPage> {
                                         border: Border(
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: _emailController,
-                                      decoration: InputDecoration(
-                                          hintText: "Email",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.isEmpty ||
-                                            !RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                                                .hasMatch(value)) {
-                                          return 'Please enter a valid email';
-                                        }
-                                        return null;
-                                      },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: _emailController,
+                                          decoration: InputDecoration(
+                                              hintText: "Email",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty ||
+                                                !RegExp(r'^[^@]+@[^@]+\.[^@]+')
+                                                    .hasMatch(value)) {
+                                              return 'Please enter a valid email';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        if (_emailError.isNotEmpty)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: Text(
+                                              _emailError,
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                   Container(
@@ -136,22 +157,40 @@ class _RegisterPageState extends State<RegisterPage> {
                                         border: Border(
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
-                                    child: TextFormField(
-                                      controller: _phoneNumberController,
-                                      decoration: InputDecoration(
-                                          hintText: "Phone Number",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                      validator: (value) {
-                                        if (value == null ||
-                                            value.isEmpty ||
-                                            !RegExp(r'^\+?[0-9]{10,15}$')
-                                                .hasMatch(value)) {
-                                          return 'Please enter a valid phone number';
-                                        }
-                                        return null;
-                                      },
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        TextFormField(
+                                          controller: _phoneNumberController,
+                                          decoration: InputDecoration(
+                                              hintText: "Phone Number",
+                                              hintStyle:
+                                                  TextStyle(color: Colors.grey),
+                                              border: InputBorder.none),
+                                          validator: (value) {
+                                            if (value == null ||
+                                                value.isEmpty ||
+                                                !RegExp(r'^\+?[0-9]{10,15}$')
+                                                    .hasMatch(value)) {
+                                              return 'Please enter a valid phone number';
+                                            }
+                                            return null;
+                                          },
+                                        ),
+                                        if (_phoneError.isNotEmpty)
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 8.0),
+                                            child: Text(
+                                              _phoneError,
+                                              style: TextStyle(
+                                                color: Colors.red,
+                                                fontSize: 12,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
                                   ),
                                   Container(
@@ -221,21 +260,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             )),
                         SizedBox(
-                          height: 20,
-                        ),
-                        if (_errorMessage.isNotEmpty)
-                          FadeInUp(
-                            duration: Duration(milliseconds: 1600),
-                            child: Text(
-                              _errorMessage,
-                              style: TextStyle(
-                                color: Colors.red,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ),
-                        SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         FadeInUp(
                             duration: Duration(milliseconds: 1500),
@@ -252,12 +277,18 @@ class _RegisterPageState extends State<RegisterPage> {
                               ),
                             )),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         FadeInUp(
                           duration: Duration(milliseconds: 1600),
                           child: MaterialButton(
                             onPressed: () async {
+                              setState(() {
+                                _emailError = '';
+                                _phoneError = '';
+                                _generalError = '';
+                              });
+
                               if (_formKey.currentState!.validate()) {
                                 UserModel user = UserModel(
                                   fullName: _fullNameController.text,
@@ -267,15 +298,34 @@ class _RegisterPageState extends State<RegisterPage> {
                                   dob: _dob,
                                   password: _passwordController.text,
                                 );
+
+                                bool emailExists = await emailAlreadyExists(
+                                    _emailController.text);
+                                bool phoneExists = await phoneAlreadyExists(
+                                    _phoneNumberController.text);
+
+                                if (emailExists) {
+                                  setState(() {
+                                    _emailError =
+                                        'A user with this email already exists.';
+                                  });
+                                  return;
+                                }
+
+                                if (phoneExists) {
+                                  setState(() {
+                                    _phoneError =
+                                        'A user with this phone number already exists.';
+                                  });
+                                  return;
+                                }
+
                                 try {
                                   await registerUser(user);
-                                  setState(() {
-                                    _errorMessage =
-                                        'User registered successfully';
-                                  });
                                 } catch (e) {
                                   setState(() {
-                                    _errorMessage = e.toString();
+                                    _generalError =
+                                        'Failed to register user: $e';
                                   });
                                 }
                               }
@@ -296,6 +346,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                         ),
+                        if (_generalError.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              _generalError,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),
@@ -313,8 +374,27 @@ class _RegisterPageState extends State<RegisterPage> {
       UserService userService = UserService();
       await userService.registerUser(user);
     } catch (e) {
-      print('Failed to register user: $e');
-      throw e;
+      throw e; // Rethrow exception to handle it in the UI
+    }
+  }
+
+  Future<bool> emailAlreadyExists(String email) async {
+    try {
+      UserService userService = UserService();
+      return await userService.emailExists(email);
+    } catch (e) {
+      print('Failed to check email: $e');
+      return false;
+    }
+  }
+
+  Future<bool> phoneAlreadyExists(String phoneNumber) async {
+    try {
+      UserService userService = UserService();
+      return await userService.phoneExists(phoneNumber);
+    } catch (e) {
+      print('Failed to check phone number: $e');
+      return false;
     }
   }
 }

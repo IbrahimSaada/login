@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:login2/chat.dart';
 
 void main() => runApp(MyApp());
 
@@ -98,7 +99,13 @@ class _homePageState extends State<homePage> {
           ),
           IconButton(
             icon: Icon(Icons.chat), // chat icon
-            onPressed: () {}, // add your onPressed function here
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatScreen()), // navigate to ChatPage
+              );
+            }, // add your onPressed function here
           ),
           IconButton(
             icon: Icon(Icons.menu), // menu icon

@@ -1,7 +1,8 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../login/verification.dart';
+//import '../login/verification.dart';
+import '../login/verification_page.dart';
 import '../login/login.dart';
 import '../models/user_model.dart'; // Make sure this path is correct
 import '../services/user_service.dart'; // Make sure this path is correct
@@ -135,6 +136,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                             }
                                             return null;
                                           },
+                                          onChanged: (value) {
+                                            _emailController.value =
+                                                TextEditingValue(
+                                              text: value.toLowerCase(),
+                                              selection:
+                                                  _emailController.selection,
+                                            );
+                                          },
                                         ),
                                         if (_emailError.isNotEmpty)
                                           Padding(
@@ -248,7 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         if (value == null ||
                                             value.isEmpty ||
                                             value.length < 8 ||
-                                            !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]')
+                                            !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
                                                 .hasMatch(value)) {
                                           return 'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character';
                                         }
@@ -322,6 +331,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                 try {
                                   await registerUser(user);
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            VerificationPage()),
+                                  );
                                 } catch (e) {
                                   setState(() {
                                     _generalError =

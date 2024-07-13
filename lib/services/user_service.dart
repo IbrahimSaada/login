@@ -13,7 +13,7 @@ class UserService {
       },
       body: jsonEncode(<String, dynamic>{
         'fullName': user.fullName,
-        'email': user.email,
+        'email': user.email.toLowerCase(),
         'phone_number': user.phoneNumber,
         'gender': user.gender,
         'dob': user.dob.toIso8601String(),

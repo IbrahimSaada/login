@@ -8,6 +8,7 @@ void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     ));
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeIn,
     );
 
-    Timer(Duration(seconds: 5), () {
+    Timer(Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(

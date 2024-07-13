@@ -79,27 +79,30 @@ class _homePageState extends State<homePage> {
       appBar: AppBar(
         title: Text('Project'),
         actions: [
+      
           IconButton(
-            icon: Icon(Icons.home),
-            onPressed: () {
-              // Add your navigation logic here to navigate to the home screen
-            },
-            color: Colors.black,
-            iconSize: 30,
-          ),
-          IconButton(
-            icon: Icon(Icons.video_collection), // reel icon
+            icon: Container(
+             width: 30, // specify the width
+                      height: 30, // specify the height
+           child: Image.asset('../assets/icons/video.png'), // reel icon
+            ),
             onPressed: () {
               // handle reel button press
             },
           ),
           IconButton(
-            icon: Icon(Icons.people), // friends icon
-            onPressed: () {}, // add your onPressed function here
+            icon: Container(
+               width: 30, // specify the width
+                      height: 30, // specify the height
+           child: Image.asset('../assets/icons/add-friend.png'), // friends icon
+            ),onPressed: () {}, // add your onPressed function here
           ),
           IconButton(
-            icon: Icon(Icons.chat), // chat icon
-            onPressed: () {
+             icon: Container(
+             width: 30, // specify the width
+                      height: 30, // specify the height
+            child: Image.asset('../assets/icons/speech-bubble.png'), // chat icon
+           ),onPressed: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -107,9 +110,11 @@ class _homePageState extends State<homePage> {
               );
             }, // add your onPressed function here
           ),
-          IconButton(
-            icon: Icon(Icons.menu), // menu icon
-            onPressed: () {}, // add your onPressed function here
+          IconButton( icon: Container(
+             width: 20, // specify the width
+                      height: 20, // specify the height
+           child: Image.asset('../assets/icons/menu.png'), // menu icon
+           ), onPressed: () {}, // add your onPressed function here
           ),
         ],
       ),
@@ -144,51 +149,60 @@ class _homePageState extends State<homePage> {
               ),
             ),
             SizedBox(height: 10), // Reduce the space between sections
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        TextFormField(
-                          controller: _postController,
-                          decoration: InputDecoration(
-                            labelText: 'What you want to share...',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(30.0),
-                                right: Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: Row(
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.camera_alt),
-                                onPressed: () {
-                                  // Add camera button press logic here
-                                },
-                              ),
-                              IconButton(
-                                icon: Icon(Icons.add_box),
-                                onPressed: () {
-                                  // Add image button press logic here
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+   Form(
+  key: _formKey,
+  child: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: [
+        Stack(
+          children: [
+            TextFormField(
+              controller: _postController,
+              decoration: InputDecoration(
+                labelText: 'What you want to share...',
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(30.0),
+                    right: Radius.circular(30.0),
+                  ),
                 ),
               ),
             ),
+            Positioned(
+              right: 0,
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Container(
+                      width: 20, // specify the width
+                      height: 20, // specify the height
+                      child: Image.asset('../assets/icons/photo-camera.png'),
+                    ),
+                    onPressed: () {
+                      // Add camera button press logic here
+                    },
+                  ),
+                  
+                  IconButton(
+                    icon: Container(
+                      width: 20, // specify the width
+                      height: 20, // specify the height
+                      child: Image.asset('../assets/icons/gallery.png'),
+                    ),
+                    onPressed: () {
+                      // Add image button press logic here
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ),
+),
             // Post Section
             Container(
               padding: EdgeInsets.all(16.0),
@@ -236,18 +250,25 @@ class _homePageState extends State<homePage> {
                   SizedBox(height: 16.0),
                   Row(
                     children: [
-                      IconButton(
-                        icon: Icon(Icons.thumb_up_alt),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.comment),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.share),
-                        onPressed: () {},
-                      ),
+                     IconButton( icon: Container(
+             width: 30, // specify the width
+                      height: 30, // specify the height
+           child: Image.asset('../assets/icons/favorite.png'), // menu icon
+           ), onPressed: () {}, // add your onPressed function here
+          ),
+                     IconButton( icon: Container(
+             width: 30, // specify the width
+                      height: 30, // specify the height
+           child: Image.asset('../assets/icons/comments.png'), // menu icon
+           ), onPressed: () {}, // add your onPressed function here
+          ),
+          
+             IconButton( icon: Container(
+             width: 30, // specify the width
+                      height: 30, // specify the height
+           child: Image.asset('../assets/icons/share-arrow.png'), // menu icon
+           ), onPressed: () {}, // add your onPressed function here
+          ),
                     ],
                   ),
 

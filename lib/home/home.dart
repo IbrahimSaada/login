@@ -111,8 +111,8 @@ class _homePageState extends State<homePage> {
             }, // add your onPressed function here
           ),
           IconButton( icon: Container(
-             width: 20, // specify the width
-                      height: 20, // specify the height
+             width: 30, // specify the width
+                      height: 30, // specify the height
            child: Image.asset('../assets/icons/menu.png'), // menu icon
            ), onPressed: () {}, // add your onPressed function here
           ),

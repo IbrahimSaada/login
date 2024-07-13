@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login2/chat.dart';
+//import 'package:login2/chat.dart';
 
 void main() => runApp(MyApp());
 
@@ -103,11 +103,7 @@ class _homePageState extends State<homePage> {
                       height: 30, // specify the height
             child: Image.asset('../assets/icons/speech-bubble.png'), // chat icon
            ),onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatScreen()), // navigate to ChatPage
-              );
+              
             }, // add your onPressed function here
           ),
           IconButton( icon: Container(

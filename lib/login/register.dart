@@ -1,7 +1,6 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-//import '../login/verification.dart';
 import '../login/verification_page.dart';
 import '../login/login.dart';
 import '../models/user_model.dart'; // Make sure this path is correct
@@ -333,8 +332,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   await registerUser(user);
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            VerificationPage()),
+                                        builder: (context) => VerificationPage(
+                                            email: _emailController.text)),
                                   );
                                 } catch (e) {
                                   setState(() {

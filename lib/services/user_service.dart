@@ -55,4 +55,23 @@ class UserService {
       throw Exception('Failed to check phone number: ${response.body}');
     }
   }
+
+  Future<bool> verifyUser(String email, String verificationCode) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/verify'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'email': email,
+        'verificationCode': verificationCode,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import '../services/user_service.dart'; // Make sure this path is correct
+import 'login.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: VerificationPage(),
+      home:
+          VerificationPage(email: 'example@example.com'), // Pass the email here
     ));
 
 class VerificationPage extends StatefulWidget {
+  final String email; // Pass the email to this page
+
+  VerificationPage({required this.email});
+
   @override
   _VerificationPageState createState() => _VerificationPageState();
 }
@@ -15,6 +22,7 @@ class _VerificationPageState extends State<VerificationPage> {
   final List<TextEditingController> _controllers =
       List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  String _errorText = '';
 
   @override
   void dispose() {
@@ -32,6 +40,33 @@ class _VerificationPageState extends State<VerificationPage> {
       }
     } else if (value.isEmpty && index - 1 >= 0) {
       FocusScope.of(context).requestFocus(_focusNodes[index - 1]);
+    }
+  }
+
+  Future<void> _verifyAccount() async {
+    try {
+      UserService userService = UserService();
+      String verificationCode =
+          _controllers.map((controller) => controller.text).join();
+      final response =
+          await userService.verifyUser(widget.email, verificationCode);
+
+      if (response) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Account successfully verified')),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      } else {
+        setState(() {
+          _errorText = 'Invalid verification code.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorText = 'Failed to verify account: $e';
+      });
     }
   }
 
@@ -123,6 +158,17 @@ class _VerificationPageState extends State<VerificationPage> {
                           );
                         }),
                       ),
+                      if (_errorText.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Text(
+                            _errorText,
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
                       SizedBox(height: 20),
                       MaterialButton(
                         height: 50,
@@ -130,9 +176,7 @@ class _VerificationPageState extends State<VerificationPage> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        onPressed: () {
-                          // Verification logic here
-                        },
+                        onPressed: _verifyAccount,
                         child: Center(
                           child: Text(
                             "Verify",

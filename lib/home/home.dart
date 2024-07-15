@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:login2/chat.dart';
-import 'package:login2/chat.dart';
+import 'package:login2/home/chat.dart';
+import 'package:login2/home/chat.dart';
 
 
 

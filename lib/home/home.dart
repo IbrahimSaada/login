@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-//import 'package:login2/chat.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,17 +7,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: homePage(),
+      home: HomePage(),
     );
   }
 }
 
-class homePage extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _homePageState createState() => _homePageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _homePageState extends State<homePage> {
+class _HomePageState extends State<HomePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _postController = TextEditingController();
 
@@ -28,31 +27,26 @@ class _homePageState extends State<homePage> {
     required String userName,
   }) {
     return Container(
-      width: 60,
+      width: 100,
       margin: EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: Colors.red, width: 2),
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: AssetImage(storyImage),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(storyImage),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
           Positioned(
-            bottom: 0,
-            left: 0,
+            top: 8,
+            left: 8,
             child: Container(
-              width: 20,
-              height: 20,
+              width: 35,
+              height: 35,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
+                border: Border.all(color: Colors.blueAccent, width: 2),
                 image: DecorationImage(
                   image: AssetImage(userImage),
                   fit: BoxFit.cover,
@@ -61,11 +55,24 @@ class _homePageState extends State<homePage> {
             ),
           ),
           Positioned(
-            bottom: 0,
-            left: 25,
+            bottom: 10,
+            left: 10,
+            right: 10,
             child: Text(
               userName,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.black,
+                    offset: Offset(2.0, 2.0),
+                  ),
+                ],
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ],
@@ -79,38 +86,37 @@ class _homePageState extends State<homePage> {
       appBar: AppBar(
         title: Text('Project'),
         actions: [
-      
           IconButton(
             icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/video.png'), // reel icon
+              width: 30,
+              height: 30,
+              child: Image.asset('../assets/icons/video.png'),
             ),
-            onPressed: () {
-              // handle reel button press
-            },
+            onPressed: () {},
           ),
           IconButton(
             icon: Container(
-               width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/add-friend.png'), // friends icon
-            ),onPressed: () {}, // add your onPressed function here
+              width: 30,
+              height: 30,
+              child: Image.asset('../assets/icons/add-friend.png'),
+            ),
+            onPressed: () {},
           ),
           IconButton(
-             icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-            child: Image.asset('../assets/icons/speech-bubble.png'), // chat icon
-           ),onPressed: () {
-              
-            }, // add your onPressed function here
+            icon: Container(
+              width: 30,
+              height: 30,
+              child: Image.asset('../assets/icons/speech-bubble.png'),
+            ),
+            onPressed: () {},
           ),
-          IconButton( icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/menu.png'), // menu icon
-           ), onPressed: () {}, // add your onPressed function here
+          IconButton(
+            icon: Container(
+              width: 30,
+              height: 30,
+              child: Image.asset('../assets/icons/menu.png'),
+            ),
+            onPressed: () {},
           ),
         ],
       ),
@@ -118,7 +124,8 @@ class _homePageState extends State<homePage> {
         child: Column(
           children: [
             Container(
-              height: 180,
+              height: 200,
+              padding: EdgeInsets.symmetric(vertical: 10),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
@@ -126,17 +133,14 @@ class _homePageState extends State<homePage> {
                       storyImage: '../assets/1.jpg',
                       userImage: '../assets/1.jpg',
                       userName: 'Aatik Tasneem'),
-                  SizedBox(width: 10), // Add space between stories
                   makeStory(
                       storyImage: '../assets/2.jpg',
                       userImage: '../assets/2.jpg',
                       userName: 'Aiony Haust'),
-                  SizedBox(width: 10), // Add space between stories
                   makeStory(
                       storyImage: '../assets/3.jpg',
                       userImage: '../assets/3.jpg',
                       userName: 'Averie Woodard'),
-                  SizedBox(width: 10), // Add space between stories
                   makeStory(
                       storyImage: '../assets/4.jpg',
                       userImage: '../assets/4.jpg',
@@ -144,68 +148,61 @@ class _homePageState extends State<homePage> {
                 ],
               ),
             ),
-            SizedBox(height: 10), // Reduce the space between sections
-   Form(
-  key: _formKey,
-  child: Padding(
-    padding: const EdgeInsets.all(16.0),
-    child: Column(
-      children: [
-        Stack(
-          children: [
-            TextFormField(
-              controller: _postController,
-              decoration: InputDecoration(
-                labelText: 'What you want to share...',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.horizontal(
-                    left: Radius.circular(30.0),
-                    right: Radius.circular(30.0),
-                  ),
+            SizedBox(height: 10),
+            Form(
+              key: _formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        TextFormField(
+                          controller: _postController,
+                          decoration: InputDecoration(
+                            labelText: 'What you want to share...',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          right: 0,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                icon: Container(
+                                  width: 30,
+                                  height: 30,
+                                  child: Image.asset('../assets/icons/photo-camera.png'),
+                                ),
+                                onPressed: () {},
+                              ),
+                              IconButton(
+                                icon: Container(
+                                  width: 30,
+                                  height: 30,
+                                  child: Image.asset('../assets/icons/gallery.png'),
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-            Positioned(
-              right: 0,
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Container(
-                      width: 20, // specify the width
-                      height: 20, // specify the height
-                      child: Image.asset('../assets/icons/photo-camera.png'),
-                    ),
-                    onPressed: () {
-                      // Add camera button press logic here
-                    },
-                  ),
-                  
-                  IconButton(
-                    icon: Container(
-                      width: 20, // specify the width
-                      height: 20, // specify the height
-                      child: Image.asset('../assets/icons/gallery.png'),
-                    ),
-                    onPressed: () {
-                      // Add image button press logic here
-                    },
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ),
-),
-            // Post Section
             Container(
-              padding: EdgeInsets.all(16.0),
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Post Header
                   Row(
                     children: [
                       CircleAvatar(
@@ -227,48 +224,47 @@ class _homePageState extends State<homePage> {
                       ),
                     ],
                   ),
-
-                  // Post Content
                   SizedBox(height: 16.0),
                   Text(
-                    'our post: ',
+                    'Our post:',
                     style: TextStyle(fontSize: 16.0),
                   ),
-
-                  // Post Image
                   SizedBox(height: 16.0),
                   Image.network(
                     'https://picsum.photos/600/300',
                     fit: BoxFit.cover,
+                    width: double.infinity,
                   ),
-
-                  // Post Actions
                   SizedBox(height: 16.0),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                     IconButton( icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/favorite.png'), // menu icon
-           ), onPressed: () {}, // add your onPressed function here
-          ),
-                     IconButton( icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/comments.png'), // menu icon
-           ), onPressed: () {}, // add your onPressed function here
-          ),
-          
-             IconButton( icon: Container(
-             width: 30, // specify the width
-                      height: 30, // specify the height
-           child: Image.asset('../assets/icons/share-arrow.png'), // menu icon
-           ), onPressed: () {}, // add your onPressed function here
-          ),
+                      IconButton(
+                        icon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.asset('../assets/icons/favorite.png'),
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.asset('../assets/icons/comments.png'),
+                        ),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Image.asset('../assets/icons/share-arrow.png'),
+                        ),
+                        onPressed: () {},
+                      ),
                     ],
                   ),
-
-                  // Post Comments
                   SizedBox(height: 16.0),
                   Text(
                     'Comments',

@@ -129,6 +129,10 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   makeStory(
+                      storyImage: 'assets/food.jpg',
+                      userImage: 'assets/chef.jpg',
+                      userName: 'Ahmad'),
+                  makeStory(
                       storyImage: 'assets/1.png',
                       userImage: 'assets/1.png',
                       userName: 'Aatik Tasneem'),

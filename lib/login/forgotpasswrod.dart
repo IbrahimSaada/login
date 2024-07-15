@@ -1,13 +1,15 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import '../login/login.dart';
+import 'login_page.dart';
 import '../login/forgotpasswrodver.dart';
-void main() => runApp(MaterialApp(
+void main() => runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: ForgotpasswrodhomePage(),
     ));
 
 class ForgotpasswrodhomePage extends StatelessWidget {
+  const ForgotpasswrodhomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +24,17 @@ class ForgotpasswrodhomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   FadeInUp(
-                      duration: Duration(milliseconds: 1000),
-                      child: Text(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
                         "Find your account",
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       )),
@@ -40,28 +42,28 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       FadeInUp(
-                          duration: Duration(milliseconds: 1400),
+                          duration: const Duration(milliseconds: 1400),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Color.fromRGBO(225, 95, 27,.3),
                                       blurRadius: 20,
@@ -70,12 +72,12 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               color: Colors.grey.shade200))),
-                                  child: TextField(
+                                  child: const TextField(
                                     decoration: InputDecoration(
                                         hintText: "Enter your email or phone number",
                                         hintStyle:
@@ -87,15 +89,15 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                               ],
                             ),
                           )),
-                           SizedBox(
+                           const SizedBox(
                         height: 40,
                       ),
                      FadeInUp(
-  duration: Duration(milliseconds: 1600),
+  duration: const Duration(milliseconds: 1600),
   child: MaterialButton(
     onPressed: () {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => ForgotpasswrodhomePage()),
+        MaterialPageRoute(builder: (context) => const ForgotpasswrodhomePage()),
       );
     },
     height: 50,
@@ -103,7 +105,7 @@ class ForgotpasswrodhomePage extends StatelessWidget {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-    child: Center(
+    child: const Center(
       child: Text(
         "Resend code",
         style: TextStyle(
@@ -114,15 +116,15 @@ class ForgotpasswrodhomePage extends StatelessWidget {
     ),
   ),
 ),
-SizedBox(
+const SizedBox(
                         height: 40,
                       ),
                      FadeInUp(
-  duration: Duration(milliseconds: 1600),
+  duration: const Duration(milliseconds: 1600),
   child: MaterialButton(
     onPressed: () {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => ForgotpasswrodverPage()),
+        MaterialPageRoute(builder: (context) => const ForgotpasswrodverPage()),
       );
     },
     height: 50,
@@ -130,7 +132,7 @@ SizedBox(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-    child: Center(
+    child: const Center(
       child: Text(
         "Continue",
         style: TextStyle(
@@ -141,19 +143,19 @@ SizedBox(
     ),
   ),
 ),
-  SizedBox(
+  const SizedBox(
                         height: 40,
                       ),
                       FadeInUp(
-                          duration: Duration(milliseconds: 1500),
+                          duration: const Duration(milliseconds: 1500),
                           child: GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) => LoginPage()),
+                                    builder: (context) => const LoginPage()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               "Back to login page",
                               style: TextStyle(color: Colors.grey),
                             ),

@@ -2,27 +2,13 @@
 import 'package:flutter/material.dart';
 
 import 'dart:async';
-import 'login/login.dart'; // Assuming the class name is Login in this file
+import 'login/login_page.dart'; // Assuming the class name is Login in this file
 
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
-    ));
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: SplashScreen(),
-    );
-  }
-}
 
 class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -44,12 +30,12 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeIn,
     );
 
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {//use const to make the app faster
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
             builder: (context) =>
-                LoginPage()), // Use Login instead of LoginPage
+                const LoginPage()), // Use Login instead of LoginPage
       );
     });
   }

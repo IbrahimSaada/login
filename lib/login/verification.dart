@@ -1,14 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'login_page.dart';
 
-void main() => runApp(MaterialApp(
+void main() => runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: VerificationPage(),
     ));
 
 class VerificationPage extends StatelessWidget {
-  final int codeLength = 6; // Define the code length here
+  final int codeLength = 6;
+
+  const VerificationPage({super.key}); // Define the code length here
 
   @override
   Widget build(BuildContext context) {
@@ -24,17 +26,17 @@ class VerificationPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   FadeInUp(
-                      duration: Duration(milliseconds: 1000),
-                      child: Text(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
                         "Verify Your Account",
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       )),
@@ -42,19 +44,19 @@ class VerificationPage extends StatelessWidget {
                 ],
               ),
             ),
-           SizedBox(height: 20),
+           const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       Row(
@@ -66,7 +68,7 @@ class VerificationPage extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                     color: Color.fromRGBO(225, 95, 27,.3),
                                     blurRadius: 20,
@@ -77,7 +79,7 @@ class VerificationPage extends StatelessWidget {
                                 width: 1.5,
                               ),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: TextField(
                                 textAlign: TextAlign.center,
                                 decoration: InputDecoration(
@@ -93,15 +95,15 @@ class VerificationPage extends StatelessWidget {
                           );
                         }),
                       ),
-                           SizedBox(
+                           const SizedBox(
                         height: 40,
                       ),
                      FadeInUp(
-  duration: Duration(milliseconds: 1600),
+  duration: const Duration(milliseconds: 1600),
   child: MaterialButton(
     onPressed: () {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     },
     height: 50,
@@ -109,7 +111,7 @@ class VerificationPage extends StatelessWidget {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-    child: Center(
+    child: const Center(
       child: Text(
         "Verify",
         style: TextStyle(

@@ -1,13 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import '../login/login.dart';
+import 'login_page.dart';
 
-void main() => runApp(MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: NewpasswordPage(),
-    ));
+
 
 class NewpasswordPage extends StatelessWidget {
+  const NewpasswordPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,17 +21,17 @@ class NewpasswordPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
+            const SizedBox(
               height: 80,
             ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   FadeInUp(
-                      duration: Duration(milliseconds: 1000),
-                      child: Text(
+                      duration: const Duration(milliseconds: 1000),
+                      child: const Text(
                         "Change Paasword",
                         style: TextStyle(color: Colors.white, fontSize: 40),
                       )),
@@ -40,28 +39,28 @@ class NewpasswordPage extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(60),
                         topRight: Radius.circular(60))),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(
+                      const SizedBox(
                         height: 60,
                       ),
                       FadeInUp(
-                          duration: Duration(milliseconds: 1400),
+                          duration: const Duration(milliseconds: 1400),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Color.fromRGBO(225, 95, 27,.3),
                                       blurRadius: 20,
@@ -70,12 +69,12 @@ class NewpasswordPage extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               color: Colors.grey.shade200))),
-                                  child: TextField(
+                                  child: const TextField(
                                     decoration: InputDecoration(
                                         hintText: "Enter New Password",
                                         hintStyle:
@@ -87,16 +86,16 @@ class NewpasswordPage extends StatelessWidget {
                               ],
                             ),
                           )),
-                            SizedBox(
+                            const SizedBox(
                         height: 60,
                       ),
                       FadeInUp(
-                          duration: Duration(milliseconds: 1400),
+                          duration: const Duration(milliseconds: 1400),
                           child: Container(
                             decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                       color: Color.fromRGBO(225, 95, 27,.3),
                                       blurRadius: 20,
@@ -105,12 +104,12 @@ class NewpasswordPage extends StatelessWidget {
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
                                       border: Border(
                                           bottom: BorderSide(
                                               color: Colors.grey.shade200))),
-                                  child: TextField(
+                                  child: const TextField(
                                     decoration: InputDecoration(
                                         hintText: "Confirm New Password",
                                         hintStyle:
@@ -122,15 +121,15 @@ class NewpasswordPage extends StatelessWidget {
                               ],
                             ),
                           )),
-                           SizedBox(
+                           const SizedBox(
                         height: 40,
                       ),
                      FadeInUp(
-  duration: Duration(milliseconds: 1600),
+  duration: const Duration(milliseconds: 1600),
   child: MaterialButton(
     onPressed: () {
       Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LoginPage()),
+        MaterialPageRoute(builder: (context) => const LoginPage()),
       );
     },
     height: 50,
@@ -138,7 +137,7 @@ class NewpasswordPage extends StatelessWidget {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(50),
     ),
-    child: Center(
+    child: const Center(
       child: Text(
         "Change",
         style: TextStyle(

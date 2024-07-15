@@ -21,6 +21,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
+# here im telling flutter that there are images inside assets and inside assets.icons
   assets:
-    - assets\realistic logo.png
+    - assets/
+    - assets/icons/

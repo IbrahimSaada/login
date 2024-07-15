@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:login2/chat.dart';
+import 'package:login2/chat.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
 
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -28,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   }) {
     return Container(
       width: 100,
-      margin: EdgeInsets.only(right: 10),
+      margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         image: DecorationImage(
@@ -60,7 +54,7 @@ class _HomePageState extends State<HomePage> {
             right: 10,
             child: Text(
               userName,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 shadows: [
@@ -84,37 +78,42 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Project'),
+        title: const Text('Project'),
         actions: [
           IconButton(
-            icon: Container(
+            icon: SizedBox(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/video.png'),
+              child: Image.asset('assets/icons/video.png'),
             ),
             onPressed: () {},
           ),
           IconButton(
-            icon: Container(
+            icon: SizedBox(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/add-friend.png'),
+              child: Image.asset('assets/icons/add-friend.png'),
             ),
             onPressed: () {},
           ),
-          IconButton(
-            icon: Container(
+           IconButton(
+            icon: SizedBox(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/speech-bubble.png'),
+              child: Image.asset('assets/icons/speech-bubble.png'),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatScreen()),
+              );
+            },
           ),
           IconButton(
-            icon: Container(
+            icon: SizedBox(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/menu.png'),
+              child: Image.asset('assets/icons/menu.png'),
             ),
             onPressed: () {},
           ),
@@ -125,30 +124,30 @@ class _HomePageState extends State<HomePage> {
           children: [
             Container(
               height: 200,
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   makeStory(
-                      storyImage: '../assets/1.jpg',
-                      userImage: '../assets/1.jpg',
+                      storyImage: 'assets/1.png',
+                      userImage: 'assets/1.png',
                       userName: 'Aatik Tasneem'),
                   makeStory(
-                      storyImage: '../assets/2.jpg',
-                      userImage: '../assets/2.jpg',
+                      storyImage: 'assets/2.jpg',
+                      userImage: 'assets/2.jpg',
                       userName: 'Aiony Haust'),
                   makeStory(
-                      storyImage: '../assets/3.jpg',
-                      userImage: '../assets/3.jpg',
+                      storyImage: 'assets/3.jpg',
+                      userImage: 'assets/3.jpg',
                       userName: 'Averie Woodard'),
                   makeStory(
-                      storyImage: '../assets/4.jpg',
-                      userImage: '../assets/4.jpg',
+                      storyImage: 'assets/4.jpg',
+                      userImage: 'assets/4.jpg',
                       userName: 'Azamat Zhanisov'),
                 ],
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Form(
               key: _formKey,
               child: Padding(
@@ -159,7 +158,7 @@ class _HomePageState extends State<HomePage> {
                       children: [
                         TextFormField(
                           controller: _postController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'What you want to share...',
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -174,18 +173,18 @@ class _HomePageState extends State<HomePage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: Container(
+                                icon: SizedBox(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('../assets/icons/photo-camera.png'),
+                                  child: Image.asset('assets/icons/photo-camera.png'),
                                 ),
                                 onPressed: () {},
                               ),
                               IconButton(
-                                icon: Container(
+                                icon: SizedBox(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('../assets/icons/gallery.png'),
+                                  child: Image.asset('assets/icons/gallery.png'),
                                 ),
                                 onPressed: () {},
                               ),
@@ -199,11 +198,11 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  const Row(
                     children: [
                       CircleAvatar(
                         backgroundImage:
@@ -224,62 +223,62 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Our post:',
                     style: TextStyle(fontSize: 16.0),
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Image.network(
                     'https://picsum.photos/600/300',
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       IconButton(
-                        icon: Container(
+                        icon: SizedBox(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/favorite.png'),
+                          child: Image.asset('assets/icons/favorite.png'),
                         ),
                         onPressed: () {},
                       ),
                       IconButton(
-                        icon: Container(
+                        icon: SizedBox(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/comments.png'),
+                          child: Image.asset('assets/icons/comments.png'),
                         ),
                         onPressed: () {},
                       ),
                       IconButton(
-                        icon: Container(
+                        icon: SizedBox(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/share-arrow.png'),
+                          child: Image.asset('assets/icons/share-arrow.png'),
                         ),
                         onPressed: () {},
                       ),
                     ],
                   ),
-                  SizedBox(height: 16.0),
-                  Text(
+                  const SizedBox(height: 16.0),
+                  const Text(
                     'Comments',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   ListView.builder(
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemCount: 3,
                     itemBuilder: (context, index) {
                       return ListTile(
-                        leading: CircleAvatar(
+                        leading: const CircleAvatar(
                           backgroundImage:
                               NetworkImage('https://picsum.photos/50/50'),
                         ),

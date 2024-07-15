@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MaterialApp(
+void main() => runApp(const MaterialApp(
   debugShowCheckedModeBanner: false,
   home: VerificationPage(),
 ));
 
 class VerificationPage extends StatefulWidget {
+  const VerificationPage({super.key});
+
   @override
   _VerificationPageState createState() => _VerificationPageState();
 }
@@ -17,8 +19,12 @@ class _VerificationPageState extends State<VerificationPage> {
 
   @override
   void dispose() {
-    _controllers.forEach((controller) => controller.dispose());
-    _focusNodes.forEach((focusNode) => focusNode.dispose());
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
     super.dispose();
   }
 
@@ -49,8 +55,8 @@ class _VerificationPageState extends State<VerificationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 80),
-            Padding(
+            const SizedBox(height: 80),
+            const Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,10 +73,10 @@ class _VerificationPageState extends State<VerificationPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
@@ -78,10 +84,10 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 60),
+                      const SizedBox(height: 60),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: List.generate(codeLength, (index) {
@@ -91,7 +97,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
+                              boxShadow: const [
                                 BoxShadow(
                                   color: Color.fromRGBO(225, 95, 27, .3),
                                   blurRadius: 20,
@@ -108,12 +114,12 @@ class _VerificationPageState extends State<VerificationPage> {
                                 controller: _controllers[index],
                                 focusNode: _focusNodes[index],
                                 textAlign: TextAlign.center,
-                                decoration: InputDecoration(
+                                decoration: const InputDecoration(
                                   counterText: "", // Hide the counter text
                                   hintText: "",
                                   border: InputBorder.none,
                                 ),
-                                style: TextStyle(fontSize: 24),
+                                style: const TextStyle(fontSize: 24),
                                 keyboardType: TextInputType.number,
                                 maxLength: 1,
                                 onChanged: (value) => _onChanged(value, index),
@@ -122,7 +128,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           );
                         }),
                       ),
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       MaterialButton(
                         height: 50,
                         color: Colors.orange[900],
@@ -132,7 +138,7 @@ class _VerificationPageState extends State<VerificationPage> {
                         onPressed: () {
                           // Verification logic here
                         },
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             "Verify",
                             style: TextStyle(
@@ -143,7 +149,7 @@ class _VerificationPageState extends State<VerificationPage> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text(
                         "By tapping Verify, you agree to our Terms.",
                         textAlign: TextAlign.center,

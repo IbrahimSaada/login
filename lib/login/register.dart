@@ -21,8 +21,15 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
+
+  @override
+  _RegisterPageState createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -157,12 +164,24 @@ class RegisterPage extends StatelessWidget {
                                         border: Border(
                                             bottom: BorderSide(
                                                 color: Colors.grey.shade200))),
-                                    child: const TextField(
-                                      obscureText: true,
+                                    child: TextField(
+                                      obscureText: _obscureText,
                                       decoration: InputDecoration(
-                                          hintText: "Password",
-                                          hintStyle: TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
+                                        hintText: "Password",
+                                        hintStyle: TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            _obscureText ? Icons.visibility_off : Icons.visibility,
+                                            color: Colors.grey,
+                                          ),
+onPressed: () {
+                                            setState(() {
+                                              _obscureText = !_obscureText;
+                                            });
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],

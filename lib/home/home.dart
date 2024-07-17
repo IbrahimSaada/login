@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
             icon: Container(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/video.png'),
+              child: Image.asset('assets/icons/video.png'),
             ),
             onPressed: () {},
           ),
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
             icon: Container(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/add-friend.png'),
+              child: Image.asset('assets/icons/add-friend.png'),
             ),
             onPressed: () {},
           ),
@@ -108,7 +108,7 @@ class _HomePageState extends State<HomePage> {
             icon: Container(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/speech-bubble.png'),
+              child: Image.asset('assets/icons/speech-bubble.png'),
             ),
             onPressed: () {},
           ),
@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
             icon: Container(
               width: 30,
               height: 30,
-              child: Image.asset('../assets/icons/menu.png'),
+              child: Image.asset('assets/icons/menu.png'),
             ),
             onPressed: () {},
           ),
@@ -132,20 +132,24 @@ class _HomePageState extends State<HomePage> {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   makeStory(
-                      storyImage: '../assets/1.jpg',
-                      userImage: '../assets/1.jpg',
+                      storyImage: 'assets/food.jpg',
+                      userImage: 'assets/chef.jpg',
+                      userName: 'Ahmad Ghosen'),
+                  makeStory(
+                      storyImage: 'assets/1.png',
+                      userImage: 'assets/1.png',
                       userName: 'Aatik Tasneem'),
                   makeStory(
-                      storyImage: '../assets/2.jpg',
-                      userImage: '../assets/2.jpg',
+                      storyImage: 'assets/2.jpg',
+                      userImage: 'assets/2.jpg',
                       userName: 'Aiony Haust'),
                   makeStory(
-                      storyImage: '../assets/3.jpg',
-                      userImage: '../assets/3.jpg',
+                      storyImage: 'assets/3.jpg',
+                      userImage: 'assets/3.jpg',
                       userName: 'Averie Woodard'),
                   makeStory(
-                      storyImage: '../assets/4.jpg',
-                      userImage: '../assets/4.jpg',
+                      storyImage: 'assets/4.jpg',
+                      userImage: 'assets/4.jpg',
                       userName: 'Azamat Zhanisov'),
                 ],
               ),
@@ -179,7 +183,7 @@ class _HomePageState extends State<HomePage> {
                                 icon: Container(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('../assets/icons/photo-camera.png'),
+                                  child: Image.asset('assets/icons/photo-camera.png'),
                                 ),
                                 onPressed: () {},
                               ),
@@ -187,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                                 icon: Container(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('../assets/icons/gallery.png'),
+                                  child: Image.asset('assets/icons/gallery.png'),
                                 ),
                                 onPressed: () {},
                               ),
@@ -245,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                         icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/favorite.png'),
+                          child: Image.asset('assets/icons/favorite.png'),
                         ),
                         onPressed: () {
                           setState(() {
@@ -259,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                         icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/comments.png'),
+                          child: Image.asset('assets/icons/comments.png'),
                         ),
                         onPressed: () {
                           setState(() {
@@ -272,7 +276,7 @@ class _HomePageState extends State<HomePage> {
                         icon: Container(
                           width: 30,
                           height: 30,
-                          child: Image.asset('../assets/icons/share-arrow.png'),
+                          child: Image.asset('assets/icons/share-arrow.png'),
                         ),
                         onPressed: () {},
                       ),

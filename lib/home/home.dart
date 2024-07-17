@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:login2/home/add_friends_page.dart';
+import 'package:login2/home/chat.dart';
 
 void main() => runApp(MyApp());
 
@@ -102,7 +104,12 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               child: Image.asset('assets/icons/add-friend.png'),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddFriendsPage()),
+              );
+            },
           ),
           IconButton(
             icon: Container(
@@ -110,7 +117,12 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               child: Image.asset('assets/icons/speech-bubble.png'),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChatScreen()),
+              );
+            },
           ),
           IconButton(
             icon: Container(
@@ -183,7 +195,8 @@ class _HomePageState extends State<HomePage> {
                                 icon: Container(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('assets/icons/photo-camera.png'),
+                                  child: Image.asset(
+                                      'assets/icons/photo-camera.png'),
                                 ),
                                 onPressed: () {},
                               ),
@@ -191,7 +204,8 @@ class _HomePageState extends State<HomePage> {
                                 icon: Container(
                                   width: 30,
                                   height: 30,
-                                  child: Image.asset('assets/icons/gallery.png'),
+                                  child:
+                                      Image.asset('assets/icons/gallery.png'),
                                 ),
                                 onPressed: () {},
                               ),

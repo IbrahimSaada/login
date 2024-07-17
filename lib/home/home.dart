@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login2/home/chat.dart';
-import 'package:login2/home/chat.dart';
+import 'package:login2/home/add_friends_page.dart';
 
 
 
@@ -94,7 +94,13 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               child: Image.asset('assets/icons/add-friend.png'),
             ),
-            onPressed: () {},
+            onPressed: () {
+ Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddFriendsPage()),
+              );
+
+            },
           ),
            IconButton(
             icon: SizedBox(

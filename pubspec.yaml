@@ -13,7 +13,10 @@ dependencies:
   fluttertoast: ^8.0.8
   cupertino_icons: ^1.0.6
   intl: ^0.19.0
-
+  http: ^0.13.3
+  flutter_form_builder: ^9.3.0
+  form_builder_validators: ^10.0.1
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

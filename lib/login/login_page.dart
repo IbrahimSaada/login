@@ -4,8 +4,15 @@ import 'package:login2/home/home.dart';
 import 'package:login2/login/forgotpasswrod.dart';
 import '../login/register.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,7 @@ class LoginPage extends StatelessWidget {
             ],
           ),
         ),
-         child: Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(height: 80),
@@ -55,7 +62,7 @@ class LoginPage extends StatelessWidget {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  child: SingleChildScrollView( // Add this
+                  child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
                         const SizedBox(height: 60),
@@ -67,7 +74,7 @@ class LoginPage extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: const [
                                 BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27,.3),
+                                  color: Color.fromRGBO(225, 95, 27, .3),
                                   blurRadius: 20,
                                   offset: Offset(0, 10),
                                 ),
@@ -101,12 +108,23 @@ class LoginPage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  child: const TextField(
-                                    obscureText: true,
+                                  child: TextField(
+                                    obscureText: _obscureText,
                                     decoration: InputDecoration(
                                       hintText: "Password",
                                       hintStyle: TextStyle(color: Colors.grey),
                                       border: InputBorder.none,
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                                          color: Colors.grey,
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            _obscureText = !_obscureText;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -163,7 +181,7 @@ class LoginPage extends StatelessWidget {
                           duration: const Duration(milliseconds: 1500),
                           child: GestureDetector(
                             onTap: () {
-                              Navigator.of(context).push(
+                             Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => const ForgotpasswrodhomePage(),
                                 ),

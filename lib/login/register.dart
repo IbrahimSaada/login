@@ -4,7 +4,6 @@ import '../login/verification_page.dart';
 import 'login_page.dart';
 
 import 'package:intl/intl.dart';
- // Add this line
 
 void main() => runApp(const MyApp());
 
@@ -68,156 +67,154 @@ class RegisterPage extends StatelessWidget {
                         topRight: Radius.circular(60))),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      FadeInUp(
-                          duration: const Duration(milliseconds: 1400),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Color.fromRGBO(225, 95, 27,.3),
-                                      blurRadius: 20,
-                                      offset: Offset(0, 10))
-                                ]),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: const TextField(
-                                    decoration: InputDecoration(
-                                        hintText: "Full Name",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: const TextField(
-                                    decoration: InputDecoration(
-                                        hintText: "Email",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: const TextField(
-                                    decoration: InputDecoration(
-                                        hintText: "Phone Number",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: DropdownButtonFormField<String>(
-                                    decoration: const InputDecoration(
-                                      hintText: "Gender",
-                                      hintStyle: TextStyle(color: Colors.grey),
-                                      border: InputBorder.none,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        FadeInUp(
+                            duration: const Duration(milliseconds: 1400),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                        color: Color.fromRGBO(225, 95, 27, .3),
+                                        blurRadius: 20,
+                                        offset: Offset(0, 10))
+                                  ]),
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: const TextField(
+                                      decoration: InputDecoration(
+                                          hintText: "Full Name",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
                                     ),
-                                    items: <String>['Male', 'Female', 'Other']
-                                       .map((String value) {
-                                      return DropdownMenuItem<String>(
-                                        value: value,
-                                        child: Text(value),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      // Handle the change in selected value here
-                                    },
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: const TextField(
+                                      decoration: InputDecoration(
+                                          hintText: "Email",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: const TextField(
+                                      decoration: InputDecoration(
+                                          hintText: "Phone Number",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: DropdownButtonFormField<String>(
+                                      decoration: const InputDecoration(
+                                        hintText: "Gender",
+                                        hintStyle: TextStyle(color: Colors.grey),
+                                        border: InputBorder.none,
+                                      ),
+                                      items: <String>['Male', 'Female', 'Other']
+                                          .map((String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? newValue) {
+                                        // Handle the change in selected value here
+                                      },
+                                    ),
+                                  ),
+                                  const BirthDatePicker(),
+                                  Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                                color: Colors.grey.shade200))),
+                                    child: const TextField(
+                                      obscureText: true,
+                                      decoration: InputDecoration(
+                                          hintText: "Password",
+                                          hintStyle: TextStyle(color: Colors.grey),
+                                          border: InputBorder.none),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        FadeInUp(
+                            duration: const Duration(milliseconds: 1500),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginPage()),
+                                );
+                             },
+                              child: const Text(
+                                "Do have account?",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                            )),
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        FadeInUp(
+                            duration: const Duration(milliseconds: 1600),
+                            child: MaterialButton(
+                              onPressed: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const VerificationPage()),
+                                );
+                              },
+                              height: 50,
+                              color: Colors.orange[900],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const BirthDatePicker(),
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: const TextField(
-                                    obscureText: true,
-                                    decoration: InputDecoration(
-                                        hintText: "Password",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      FadeInUp(
-                          duration: const Duration(milliseconds: 1500),
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginPage()),
-                              );
-                            },
-                            child: const Text(
-                              "Do have account?",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                          )),
-                      const SizedBox(
-                        height: 40,
-                      ),
-                      FadeInUp(
-duration: const Duration(milliseconds: 1600),
-                        child: MaterialButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) => const VerificationPage()),
-                            );
-                          },
-                          height: 50,
-                          color: Colors.orange[900],
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              "Register",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -244,8 +241,8 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
         context: context,
         initialDate: _selectedDate,
         firstDate: DateTime(1900),
-        lastDate: DateTime(2006,12,31));
-    if (picked != null && picked != _selectedDate) {
+        lastDate: DateTime(2006, 12, 31));
+    if (picked!= null && picked!= _selectedDate) {
       setState(() {
         _selectedDate = picked;
       });
@@ -254,7 +251,6 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-   
     return GestureDetector(
       onTap: () {
         _selectDate(context);
@@ -270,8 +266,6 @@ class _BirthDatePickerState extends State<BirthDatePicker> {
           readOnly: true,
         ),
       ),
-
-
     );
   }
 }

@@ -7,7 +7,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-       DebugShowCheckedModeBanner : false;
+
     return MaterialApp(
       title: 'Add Friends',
       theme: ThemeData(
@@ -24,7 +24,6 @@ class AddFriendsPage extends StatefulWidget {
 }
 
 class _AddFriendsPageState extends State<AddFriendsPage> {
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

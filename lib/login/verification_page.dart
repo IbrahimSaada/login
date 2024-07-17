@@ -85,77 +85,79 @@ class _VerificationPageState extends State<VerificationPage> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(30),
-                  child: Column(
-                    children: <Widget>[
-                      const SizedBox(height: 60),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: List.generate(codeLength, (index) {
-                          return Container(
-                            width: 40,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Color.fromRGBO(225, 95, 27, .3),
-                                  blurRadius: 20,
-                                  offset: Offset(0, 10),
+                  child: SingleChildScrollView( // Add this
+                    child: Column(
+                      children: <Widget>[
+                        const SizedBox(height: 60),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: List.generate(codeLength, (index) {
+                            return Container(
+                              width: 40,
+                              height: 50,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: Color.fromRGBO(225, 95, 27, .3),
+                                    blurRadius: 20,
+                                    offset: Offset(0, 10),
+                                  ),
+                                ],
+                                border: Border.all(
+                                  color: Colors.grey.shade300,
+                                  width: 1.5,
                                 ),
-                              ],
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                                width: 1.5,
                               ),
-                            ),
-                            child: Center(
-                              child: TextField(
-                                controller: _controllers[index],
-                                focusNode: _focusNodes[index],
-                                textAlign: TextAlign.center,
-                                decoration: const InputDecoration(
-                                  counterText: "", // Hide the counter text
-                                  hintText: "",
-                                  border: InputBorder.none,
+                              child: Center(
+                                child: TextField(
+                                  controller: _controllers[index],
+                                  focusNode: _focusNodes[index],
+                                  textAlign: TextAlign.center,
+                                  decoration: const InputDecoration(
+                                    counterText: "", // Hide the counter text
+                                    hintText: "",
+                                    border: InputBorder.none,
+                                  ),
+                                  style: const TextStyle(fontSize: 24),
+                                  keyboardType: TextInputType.number,
+                                  maxLength: 1,
+                                  onChanged: (value) => _onChanged(value, index),
                                 ),
-                                style: const TextStyle(fontSize: 24),
-                                keyboardType: TextInputType.number,
-                                maxLength: 1,
-                                onChanged: (value) => _onChanged(value, index),
                               ),
-                            ),
-                          );
-                        }),
-                      ),
-                      const SizedBox(height: 20),
-                      MaterialButton(
-                        height: 50,
-                        color: Colors.orange[900],
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                            );
+                          }),
                         ),
-                        onPressed: () {
-                          // Verification logic here
-                        },
-                        child: const Center(
-                          child: Text(
-                            "Verify",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                        const SizedBox(height: 20),
+                        MaterialButton(
+                          height: 50,
+                          color: Colors.orange[900],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          onPressed: () {
+                            // Verification logic here
+                          },
+                          child: const Center(
+                            child: Text(
+                              "Verify",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        "By tapping Verify, you agree to our Terms.",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(color: Colors.grey.shade700),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Text(
+                          "By tapping Verify, youagree to our Terms.",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: Colors.grey.shade700),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

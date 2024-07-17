@@ -7,8 +7,40 @@ void main() => runApp(const MaterialApp(
       home: ForgotpasswrodverPage(),
     ));
 
-class ForgotpasswrodverPage extends StatelessWidget {
+class ForgotpasswrodverPage extends StatefulWidget {
   const ForgotpasswrodverPage({super.key});
+
+  @override
+  _ForgotpasswrodverPageState createState() => _ForgotpasswrodverPageState();
+}
+
+class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
+  final int codeLength = 6;
+  final List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
+  final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
+
+  @override
+  void dispose() {
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    super.dispose();
+  }
+
+  void _onChanged(String value, int index) {
+    if (value.isNotEmpty) {
+      if (index + 1 < codeLength) {
+        FocusScope.of(context).requestFocus(_focusNodes[index + 1]);
+      } else {
+        _focusNodes[index].unfocus();
+      }
+    } else if (value.isEmpty && index - 1 >= 0) {
+      FocusScope.of(context).requestFocus(_focusNodes[index - 1]);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,53 +73,61 @@ class ForgotpasswrodverPage extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+           const SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60))),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(60),
+                    topRight: Radius.circular(60),
+                  ),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(30),
                   child: Column(
                     children: <Widget>[
-                      const SizedBox(
-                        height: 60,
-                      ),
-                      FadeInUp(
-                          duration: const Duration(milliseconds: 1400),
-                          child: Container(
+                      const SizedBox(height: 60),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: List.generate(codeLength, (index) {
+                          return Container(
+                            width: 40,
+                            height: 50,
                             decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
-                                  BoxShadow(
-                                      color: Color.fromRGBO(225, 95, 27, .3),
-                                      blurRadius: 20,
-                                      offset: Offset(0, 10))
-                                ]),
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                              color: Colors.grey.shade200))),
-                                  child: const TextField(
-                                    decoration: InputDecoration(
-                                        hintText:
-                                            "Enter your code",
-                                        hintStyle:
-                                            TextStyle(color: Colors.grey),
-                                        border: InputBorder.none),
-                                  ),
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Color.fromRGBO(225, 95, 27, .3),
+                                  blurRadius: 20,
+                                  offset: Offset(0, 10),
                                 ),
                               ],
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                                width: 1.5,
+                              ),
                             ),
-                          )),
+                            child: Center(
+                              child: TextField(
+                                controller: _controllers[index],
+                                focusNode: _focusNodes[index],
+                                textAlign: TextAlign.center,
+                                decoration: const InputDecoration(
+                                  counterText: "", // Hide the counter text
+                                  hintText: "",
+                                  border: InputBorder.none,
+                                ),
+                                style: const TextStyle(fontSize: 24),
+                                keyboardType: TextInputType.number,
+                                maxLength: 1,
+                                onChanged: (value) => _onChanged(value, index),
+                              ),
+                            ),
+                          );
+                        }),
+                      ),
                       const SizedBox(
                         height: 40,
                       ),

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import '../services/user_service.dart'; // Make sure this path is correct
+import 'login_page.dart';
 
-void main() => runApp(const MaterialApp(
-  debugShowCheckedModeBanner: false,
-  home: VerificationPage(),
-));
+void main() => runApp(MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home:
+          VerificationPage(email: 'example@example.com'), // Pass the email here
+    ));
 
 class VerificationPage extends StatefulWidget {
-  const VerificationPage({super.key});
+  final String email; // Pass the email to this page
+
+  VerificationPage({required this.email});
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -14,8 +19,10 @@ class VerificationPage extends StatefulWidget {
 
 class _VerificationPageState extends State<VerificationPage> {
   final int codeLength = 6; // Set the length of the verification code
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  String _errorText = '';
 
   @override
   void dispose() {
@@ -40,6 +47,33 @@ class _VerificationPageState extends State<VerificationPage> {
     }
   }
 
+  Future<void> _verifyAccount() async {
+    try {
+      UserService userService = UserService();
+      String verificationCode =
+          _controllers.map((controller) => controller.text).join();
+      final response =
+          await userService.verifyUser(widget.email, verificationCode);
+
+      if (response) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Account successfully verified')),
+        );
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()),
+        );
+      } else {
+        setState(() {
+          _errorText = 'Invalid verification code.';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        _errorText = 'Failed to verify account: $e';
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,8 +89,8 @@ class _VerificationPageState extends State<VerificationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SizedBox(height: 80),
-            const Padding(
+            SizedBox(height: 80),
+            Padding(
               padding: EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,10 +107,10 @@ class _VerificationPageState extends State<VerificationPage> {
                 ],
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
@@ -84,11 +118,11 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(30),
-                  child: SingleChildScrollView( // Add this
+                  padding: EdgeInsets.all(30),
+                  child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        const SizedBox(height: 60),
+                        SizedBox(height: 60),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: List.generate(codeLength, (index) {
@@ -98,7 +132,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: const [
+                                boxShadow: [
                                   BoxShadow(
                                     color: Color.fromRGBO(225, 95, 27, .3),
                                     blurRadius: 20,
@@ -115,31 +149,41 @@ class _VerificationPageState extends State<VerificationPage> {
                                   controller: _controllers[index],
                                   focusNode: _focusNodes[index],
                                   textAlign: TextAlign.center,
-                                  decoration: const InputDecoration(
+                                  decoration: InputDecoration(
                                     counterText: "", // Hide the counter text
                                     hintText: "",
                                     border: InputBorder.none,
                                   ),
-                                  style: const TextStyle(fontSize: 24),
+                                  style: TextStyle(fontSize: 24),
                                   keyboardType: TextInputType.number,
                                   maxLength: 1,
-                                  onChanged: (value) => _onChanged(value, index),
+                                  onChanged: (value) =>
+                                      _onChanged(value, index),
                                 ),
                               ),
                             );
                           }),
                         ),
-                        const SizedBox(height: 20),
+                        if (_errorText.isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Text(
+                              _errorText,
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        SizedBox(height: 20),
                         MaterialButton(
                           height: 50,
                           color: Colors.orange[900],
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          onPressed: () {
-                            // Verification logic here
-                          },
-                          child: const Center(
+                          onPressed: _verifyAccount,
+                          child: Center(
                             child: Text(
                               "Verify",
                               style: TextStyle(
@@ -150,9 +194,9 @@ class _VerificationPageState extends State<VerificationPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: 10),
                         Text(
-                          "By tapping Verify, youagree to our Terms.",
+                          "By tapping Verify, you agree to our Terms.",
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.grey.shade700),
                         ),

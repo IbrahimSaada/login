@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../services/user_service.dart'; // Make sure this path is correct
+import '../services/UserVerificationService.dart'; // Ensure this path is correct
 import 'login_page.dart';
 
 void main() => runApp(MaterialApp(
@@ -11,7 +11,7 @@ void main() => runApp(MaterialApp(
 class VerificationPage extends StatefulWidget {
   final String email; // Pass the email to this page
 
-  VerificationPage({required this.email});
+  const VerificationPage({required this.email, Key? key}) : super(key: key);
 
   @override
   _VerificationPageState createState() => _VerificationPageState();
@@ -23,6 +23,9 @@ class _VerificationPageState extends State<VerificationPage> {
       List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   String _errorText = '';
+
+  final UserVerificationService _userVerificationService =
+      UserVerificationService();
 
   @override
   void dispose() {
@@ -49,18 +52,17 @@ class _VerificationPageState extends State<VerificationPage> {
 
   Future<void> _verifyAccount() async {
     try {
-      UserService userService = UserService();
       String verificationCode =
           _controllers.map((controller) => controller.text).join();
-      final response =
-          await userService.verifyUser(widget.email, verificationCode);
+      final response = await _userVerificationService.verifyUser(
+          widget.email, verificationCode);
 
       if (response) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Account successfully verified')),
+          const SnackBar(content: Text('Account successfully verified')),
         );
         Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginPage()),
+          MaterialPageRoute(builder: (context) => const LoginPage()),
         );
       } else {
         setState(() {
@@ -89,12 +91,12 @@ class _VerificationPageState extends State<VerificationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: const EdgeInsets.all(20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: const <Widget>[
                   Text(
                     "Verify Your Account",
                     style: TextStyle(color: Colors.white, fontSize: 40),
@@ -107,10 +109,10 @@ class _VerificationPageState extends State<VerificationPage> {
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(60),
@@ -118,11 +120,11 @@ class _VerificationPageState extends State<VerificationPage> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.all(30),
+                  padding: const EdgeInsets.all(30),
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-                        SizedBox(height: 60),
+                        const SizedBox(height: 60),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: List.generate(codeLength, (index) {
@@ -132,7 +134,7 @@ class _VerificationPageState extends State<VerificationPage> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
+                                boxShadow: const [
                                   BoxShadow(
                                     color: Color.fromRGBO(225, 95, 27, .3),
                                     blurRadius: 20,
@@ -149,12 +151,12 @@ class _VerificationPageState extends State<VerificationPage> {
                                   controller: _controllers[index],
                                   focusNode: _focusNodes[index],
                                   textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                     counterText: "", // Hide the counter text
                                     hintText: "",
                                     border: InputBorder.none,
                                   ),
-                                  style: TextStyle(fontSize: 24),
+                                  style: const TextStyle(fontSize: 24),
                                   keyboardType: TextInputType.number,
                                   maxLength: 1,
                                   onChanged: (value) =>
@@ -169,13 +171,13 @@ class _VerificationPageState extends State<VerificationPage> {
                             padding: const EdgeInsets.only(top: 8.0),
                             child: Text(
                               _errorText,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.red,
                                 fontSize: 12,
                               ),
                             ),
                           ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         MaterialButton(
                           height: 50,
                           color: Colors.orange[900],
@@ -183,7 +185,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             borderRadius: BorderRadius.circular(50),
                           ),
                           onPressed: _verifyAccount,
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               "Verify",
                               style: TextStyle(
@@ -194,7 +196,7 @@ class _VerificationPageState extends State<VerificationPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           "By tapping Verify, you agree to our Terms.",
                           textAlign: TextAlign.center,

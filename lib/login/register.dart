@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../login/verification_page.dart';
 import '../login/login_page.dart';
 import '../models/user_model.dart'; // Ensure this path is correct
-import '../services/user_service.dart'; // Ensure this path is correct
+import '../services/UserRegistrationService.dart'; // Ensure this path is correct
 
 void main() => runApp(const MyApp());
 
@@ -42,6 +42,9 @@ class _RegisterPageState extends State<RegisterPage> {
   String _emailError = '';
   String _phoneError = '';
   String _generalError = '';
+
+  final UserRegistrationService _userRegistrationService =
+      UserRegistrationService();
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +376,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   }
 
                                   try {
-                                    await registerUser(user);
+                                    await _userRegistrationService
+                                        .registerUser(user);
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -429,19 +433,9 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> registerUser(UserModel user) async {
-    try {
-      UserService userService = UserService();
-      await userService.registerUser(user);
-    } catch (e) {
-      throw e; // Rethrow exception to handle it in the UI
-    }
-  }
-
   Future<bool> emailAlreadyExists(String email) async {
     try {
-      UserService userService = UserService();
-      return await userService.emailExists(email);
+      return await _userRegistrationService.emailExists(email);
     } catch (e) {
       print('Failed to check email: $e');
       return false;
@@ -450,8 +444,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<bool> phoneAlreadyExists(String phoneNumber) async {
     try {
-      UserService userService = UserService();
-      return await userService.phoneExists(phoneNumber);
+      return await _userRegistrationService.phoneExists(phoneNumber);
     } catch (e) {
       print('Failed to check phone number: $e');
       return false;

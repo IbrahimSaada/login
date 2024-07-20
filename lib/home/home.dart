@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
 import 'package:login2/menu/menu_page.dart';
-import 'package:login2/home/chat_page.dart';
+
 
 void main() => runApp(MyApp());
 

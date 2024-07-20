@@ -108,7 +108,6 @@ class _MessageComposerState extends State<MessageComposer> {
             icon: Icon(Icons.send, color: Colors.orange),
             onPressed: () {
               // Handle sending message
-              String message = _controller.text;
               // Add message sending logic here
 
               // Clear the text field

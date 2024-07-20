@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:login2/menu/profile_page.dart';
+import 'package:login2/login/login_page.dart';
 class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -49,10 +50,17 @@ class MenuPage extends StatelessWidget {
               leading: Icon(Icons.settings, color: Colors.orange),
               title: Text('Setting'),
             ),
-            ListTile(
-              leading: Icon(Icons.logout, color: Colors.pink),
-              title: Text('Logout'),
-            ),
+   ListTile(
+  leading: Icon(Icons.logout, color: Colors.pink),
+  title: Text('Logout'),
+  onTap: () {
+    // logout function
+    Navigator.pushReplacement(
+      context, 
+      MaterialPageRoute(builder: (context) => LoginPage()),
+    );
+  },
+),
           ],
         ),
       ),

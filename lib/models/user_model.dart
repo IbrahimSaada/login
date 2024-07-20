@@ -19,7 +19,7 @@ class UserModel {
     return {
       'fullName': fullName,
       'email': email.toLowerCase(),
-      'phoneNumber': phoneNumber,
+      'phone_number': phoneNumber, // Ensure the correct field name is used
       'gender': gender,
       'dob': dob.toIso8601String(),
       'password': password,

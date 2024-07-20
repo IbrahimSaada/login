@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/chat.dart';
+import 'package:login2/home/menu_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -130,7 +131,12 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               child: Image.asset('assets/icons/menu.png'),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MenuPage()),
+              );
+            },
           ),
         ],
       ),

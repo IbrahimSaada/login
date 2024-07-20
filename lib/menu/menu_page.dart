@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:login2/home/profile_page.dart';
+import 'package:login2/menu/profile_page.dart';
 class MenuPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

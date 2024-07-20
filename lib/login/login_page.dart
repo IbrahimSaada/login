@@ -116,7 +116,9 @@ class _LoginPageState extends State<LoginPage> {
                                       border: InputBorder.none,
                                       suffixIcon: IconButton(
                                         icon: Icon(
-                                          _obscureText ? Icons.visibility_off : Icons.visibility,
+                                          _obscureText
+                                              ? Icons.visibility_off
+                                              : Icons.visibility,
                                           color: Colors.grey,
                                         ),
                                         onPressed: () {
@@ -139,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                             onPressed: () {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) =>  HomePage(),
+                                  builder: (context) => HomePage(),
                                 ),
                               );
                             },
@@ -181,9 +183,10 @@ class _LoginPageState extends State<LoginPage> {
                           duration: const Duration(milliseconds: 1500),
                           child: GestureDetector(
                             onTap: () {
-                             Navigator.of(context).push(
+                              Navigator.of(context).push(
                                 MaterialPageRoute(
-                                  builder: (context) => const ForgotpasswrodhomePage(),
+                                  builder: (context) =>
+                                      const ForgotpasswrodhomePage(),
                                 ),
                               );
                             },

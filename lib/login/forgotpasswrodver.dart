@@ -16,7 +16,8 @@ class ForgotpasswrodverPage extends StatefulWidget {
 
 class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
   final int codeLength = 6;
-  final List<TextEditingController> _controllers = List.generate(6, (index) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
 
   @override
@@ -73,7 +74,7 @@ class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
                 ],
               ),
             ),
-           const SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(

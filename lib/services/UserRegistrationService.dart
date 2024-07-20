@@ -3,7 +3,8 @@ import 'dart:convert';
 import '../models/user_model.dart';
 
 class UserRegistrationService {
-  final String baseUrl = 'https://your-ngrok-url/api/Registration';
+  final String baseUrl =
+      'https://fb46-185-97-92-49.ngrok-free.app/api/Registration';
 
   Future<void> registerUser(UserModel user) async {
     final response = await http.post(

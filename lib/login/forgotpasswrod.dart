@@ -52,7 +52,8 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                         topRight: Radius.circular(60))),
                 child: Padding(
                   padding: const EdgeInsets.all(30),
-                  child: SingleChildScrollView( // Add this
+                  child: SingleChildScrollView(
+                    // Add this
                     child: Column(
                       children: <Widget>[
                         const SizedBox(
@@ -80,8 +81,10 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                                                 color: Colors.grey.shade200))),
                                     child: const TextField(
                                       decoration: InputDecoration(
-                                          hintText: "Enter your email or phone number",
-                                          hintStyle: TextStyle(color: Colors.grey),
+                                          hintText:
+                                              "Enter your email or phone number",
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
                                           border: InputBorder.none),
                                     ),
                                   ),
@@ -96,7 +99,9 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                           child: MaterialButton(
                             onPressed: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => const ForgotpasswrodhomePage()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotpasswrodhomePage()),
                               );
                             },
                             height: 50,
@@ -123,7 +128,9 @@ class ForgotpasswrodhomePage extends StatelessWidget {
                           child: MaterialButton(
                             onPressed: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (context) => const ForgotpasswrodverPage()),
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotpasswrodverPage()),
                               );
                             },
                             height: 50,

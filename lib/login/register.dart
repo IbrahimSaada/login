@@ -277,10 +277,7 @@ class _RegisterPageState extends State<RegisterPage> {
   ),
   child: TextFormField(
     decoration: InputDecoration(
-     
-      hintText: _dob != null 
-        ? DateFormat('yyyy-MM-dd').format(_dob) 
-        : "Date of Birth",
+      hintText: "Date of Birth", // Removed the colon
       hintStyle: TextStyle(color: Colors.grey),
       border: InputBorder.none,
       suffixIcon: Icon(Icons.calendar_today),

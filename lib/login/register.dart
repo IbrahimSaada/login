@@ -285,12 +285,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                           suffixIcon:
                                               Icon(Icons.calendar_today),
                                         ),
+                                        readOnly: true,
                                         onTap: () {
                                           showDatePicker(
                                             context: context,
-                                            initialDate: _dob,
+                                            initialDate: _dob ?? DateTime(2000),
                                             firstDate: DateTime(1900),
-                                            lastDate: DateTime(2024),
+                                            lastDate: DateTime(
+                                                DateTime.now().year - 12),
                                           ).then((date) {
                                             setState(() {
                                               if (date != null) {

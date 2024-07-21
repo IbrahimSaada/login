@@ -1,14 +1,16 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'new_password_page.dart';
+import '../services/PasswordResetService.dart';
 
 void main() => runApp(const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ForgotpasswrodverPage(),
+      home: ForgotpasswrodverPage(emailOrPhone: ''),
     ));
 
 class ForgotpasswrodverPage extends StatefulWidget {
-  const ForgotpasswrodverPage({super.key});
+  final String emailOrPhone;
+  const ForgotpasswrodverPage({super.key, required this.emailOrPhone});
 
   @override
   _ForgotpasswrodverPageState createState() => _ForgotpasswrodverPageState();
@@ -43,17 +45,59 @@ class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
     }
   }
 
+  void _verifyCode() async {
+    String code = _controllers.map((controller) => controller.text).join();
+    try {
+      bool isValid = await PasswordResetService().verifyUser(
+        widget.emailOrPhone,
+        code,
+      );
+      if (isValid) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+              builder: (context) => NewpasswordPage(
+                  emailOrPhone: widget.emailOrPhone, verificationCode: code)),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invalid verification code')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
+
+  Future<void> _resendCode() async {
+    try {
+      await PasswordResetService().requestPasswordReset(widget.emailOrPhone);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Verification code resent')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Colors.orange.shade900,
-          Colors.orange.shade800,
-          Colors.orange.shade400
-        ])),
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            colors: [
+              Colors.orange.shade900,
+              Colors.orange.shade800,
+              Colors.orange.shade400,
+            ],
+          ),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -66,11 +110,12 @@ class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   FadeInUp(
-                      duration: const Duration(milliseconds: 1000),
-                      child: const Text(
-                        "Verify Your Account",
-                        style: TextStyle(color: Colors.white, fontSize: 40),
-                      )),
+                    duration: const Duration(milliseconds: 1000),
+                    child: const Text(
+                      "Verify Your Account",
+                      style: TextStyle(color: Colors.white, fontSize: 40),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -129,19 +174,11 @@ class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
                           );
                         }),
                       ),
-                      const SizedBox(
-                        height: 40,
-                      ),
+                      const SizedBox(height: 40),
                       FadeInUp(
                         duration: const Duration(milliseconds: 1600),
                         child: MaterialButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const NewpasswordPage()),
-                            );
-                          },
+                          onPressed: _verifyCode,
                           height: 50,
                           color: Colors.orange[900],
                           shape: RoundedRectangleBorder(
@@ -157,7 +194,28 @@ class _ForgotpasswrodverPageState extends State<ForgotpasswrodverPage> {
                             ),
                           ),
                         ),
-                      )
+                      ),
+                      const SizedBox(height: 20),
+                      FadeInUp(
+                        duration: const Duration(milliseconds: 1600),
+                        child: MaterialButton(
+                          onPressed: _resendCode,
+                          height: 50,
+                          color: Colors.orange[900],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          child: const Center(
+                            child: Text(
+                              "Resend Code",
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

@@ -266,7 +266,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         },
                                       ),
                                     ),
-                                    Container(
+ Container(
   padding: const EdgeInsets.all(10),
   decoration: BoxDecoration(
     border: Border(
@@ -300,6 +300,8 @@ class _RegisterPageState extends State<RegisterPage> {
     controller: _dateController,
     validator: (value) {
       if (_dob == null) {
+        return 'Please select your date of birth';
+      } else if (value == null || value.isEmpty) {
         return 'Please select your date of birth';
       }
       return null;

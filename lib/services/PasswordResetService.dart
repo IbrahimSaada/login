@@ -2,7 +2,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class PasswordResetService {
-  final String baseUrl = 'https://your-ngrok-url/api/ResetPassword';
+  final String baseUrl =
+      'https://9fe9-185-97-92-59.ngrok-free.app/api/ResetPassword';
 
   Future<void> requestPasswordReset(String emailOrPhoneNumber) async {
     final response = await http.post(
@@ -17,25 +18,6 @@ class PasswordResetService {
 
     if (response.statusCode != 200) {
       throw Exception('Failed to request password reset: ${response.body}');
-    }
-  }
-
-  Future<void> resetPassword(String emailOrPhoneNumber, String verificationCode,
-      String newPassword) async {
-    final response = await http.post(
-      Uri.parse('$baseUrl/reset'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{
-        'emailOrPhoneNumber': emailOrPhoneNumber,
-        'verificationCode': verificationCode,
-        'newPassword': newPassword,
-      }),
-    );
-
-    if (response.statusCode != 200) {
-      throw Exception('Failed to reset password: ${response.body}');
     }
   }
 
@@ -56,6 +38,25 @@ class PasswordResetService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  Future<void> resetPassword(String emailOrPhoneNumber, String verificationCode,
+      String newPassword) async {
+    final response = await http.post(
+      Uri.parse('$baseUrl/reset'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, dynamic>{
+        'emailOrPhoneNumber': emailOrPhoneNumber,
+        'verificationCode': verificationCode,
+        'newPassword': newPassword,
+      }),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to reset password: ${response.body}');
     }
   }
 }

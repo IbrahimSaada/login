@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _dateController = TextEditingController();
   String? _gender;
-  DateTime _dob = DateTime.now();
+  DateTime? _dob;
   bool _obscureText = true;
 
   String _emailError = '';
@@ -209,8 +209,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                             validator: (value) {
                                               if (value == null ||
                                                   value.isEmpty ||
-                                                 !RegExp(r'^\+?[0-9]{10,15}$')
-                                                     .hasMatch(value)) {
+                                                  !RegExp(r'^\+?[0-9]{10,15}$')
+                                                      .hasMatch(value)) {
                                                 return 'Please enter a valid phone number';
                                               }
                                               return null;
@@ -266,48 +266,56 @@ class _RegisterPageState extends State<RegisterPage> {
                                         },
                                       ),
                                     ),
- Container(
-  padding: const EdgeInsets.all(10),
-  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(
-        color: Colors.grey.shade200,
-      ),
-    ),
-  ),
-  child: TextFormField(
-    decoration: InputDecoration(
-      hintText: "Date of Birth", // Removed the colon
-      hintStyle: TextStyle(color: Colors.grey),
-      border: InputBorder.none,
-      suffixIcon: Icon(Icons.calendar_today),
-    ),
-    onTap: () {
-      showDatePicker(
-        context: context,
-        initialDate: _dob,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2012),
-      ).then((date) {
-        setState(() {
-          if (date != null) {
-            _dob = date;
-            _dateController.text = DateFormat('yyyy-MM-dd').format(date);
-          }
-        });
-      });
-    },
-    controller: _dateController,
-    validator: (value) {
-      if (_dob == null) {
-        return 'Please select your date of birth';
-      } else if (value == null || value.isEmpty) {
-        return 'Please select your date of birth';
-      }
-      return null;
-    },
-  ),
-),
+                                    Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        border: Border(
+                                          bottom: BorderSide(
+                                            color: Colors.grey.shade200,
+                                          ),
+                                        ),
+                                      ),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                          hintText:
+                                              "Date of Birth", // Removed the colon
+                                          hintStyle:
+                                              TextStyle(color: Colors.grey),
+                                          border: InputBorder.none,
+                                          suffixIcon:
+                                              Icon(Icons.calendar_today),
+                                        ),
+                                        readOnly: true,
+                                        onTap: () {
+                                          showDatePicker(
+                                            context: context,
+                                            initialDate: _dob ?? DateTime(2000),
+                                            firstDate: DateTime(1900),
+                                            lastDate: DateTime(
+                                                DateTime.now().year - 12),
+                                          ).then((date) {
+                                            setState(() {
+                                              if (date != null) {
+                                                _dob = date;
+                                                _dateController.text =
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(date);
+                                              }
+                                            });
+                                          });
+                                        },
+                                        controller: _dateController,
+                                        validator: (value) {
+                                          if (_dob == null) {
+                                            return 'Please select your date of birth';
+                                          } else if (value == null ||
+                                              value.isEmpty) {
+                                            return 'Please select your date of birth';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
@@ -326,13 +334,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                           suffixIcon: IconButton(
                                             icon: Icon(
                                               _obscureText
-                                                 ? Icons.visibility_off
+                                                  ? Icons.visibility_off
                                                   : Icons.visibility,
                                               color: Colors.grey,
                                             ),
                                             onPressed: () {
                                               setState(() {
-                                                _obscureText =!_obscureText;
+                                                _obscureText = !_obscureText;
                                               });
                                             },
                                           ),
@@ -341,8 +349,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                           if (value == null ||
                                               value.isEmpty ||
                                               value.length < 8 ||
-                                             !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
-                                                 .hasMatch(value)) {
+                                              !RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
+                                                  .hasMatch(value)) {
                                             return 'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character';
                                           }
                                           return null;
@@ -369,7 +377,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   "Do have account?",
                                   style: TextStyle(color: Colors.grey),
                                 ),
-)),
+                              )),
                           const SizedBox(
                             height: 40,
                           ),
@@ -389,7 +397,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     email: _emailController.text,
                                     phoneNumber: _phoneNumberController.text,
                                     gender: _gender!,
-                                    dob: _dob,
+                                    dob: _dob!,
                                     password: _passwordController.text,
                                   );
 

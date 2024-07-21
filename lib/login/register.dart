@@ -266,7 +266,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         },
                                       ),
                                     ),
-<<<<<<< HEAD
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(
@@ -286,14 +285,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                           suffixIcon:
                                               Icon(Icons.calendar_today),
                                         ),
-                                        readOnly: true,
                                         onTap: () {
                                           showDatePicker(
                                             context: context,
-                                            initialDate: _dob ?? DateTime(2000),
+                                            initialDate: _dob,
                                             firstDate: DateTime(1900),
-                                            lastDate: DateTime(
-                                                DateTime.now().year - 12),
+                                            lastDate: DateTime(2024),
                                           ).then((date) {
                                             setState(() {
                                               if (date != null) {
@@ -317,50 +314,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                         },
                                       ),
                                     ),
-=======
- Container(
-  padding: const EdgeInsets.all(10),
-  decoration: BoxDecoration(
-    border: Border(
-      bottom: BorderSide(
-        color: Colors.grey.shade200,
-      ),
-    ),
-  ),
-  child: TextFormField(
-    decoration: InputDecoration(
-      hintText: "Date of Birth", // Removed the colon
-      hintStyle: TextStyle(color: Colors.grey),
-      border: InputBorder.none,
-      suffixIcon: Icon(Icons.calendar_today),
-    ),
-    onTap: () {
-      showDatePicker(
-        context: context,
-        initialDate: _dob,
-        firstDate: DateTime(1900),
-        lastDate: DateTime(2024),
-      ).then((date) {
-        setState(() {
-          if (date != null) {
-            _dob = date;
-            _dateController.text = DateFormat('yyyy-MM-dd').format(date);
-          }
-        });
-      });
-    },
-    controller: _dateController,
-    validator: (value) {
-      if (_dob == null) {
-        return 'Please select your date of birth';
-      } else if (value == null || value.isEmpty) {
-        return 'Please select your date of birth';
-      }
-      return null;
-    },
-  ),
-),
->>>>>>> 1ae3dd38ce5bc1b6b5d30fd28280b95371bfe334
                                     Container(
                                       padding: const EdgeInsets.all(10),
                                       decoration: BoxDecoration(

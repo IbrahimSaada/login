@@ -287,7 +287,7 @@ class _RegisterPageState extends State<RegisterPage> {
         context: context,
         initialDate: _dob,
         firstDate: DateTime(1900),
-        lastDate: DateTime(2025),
+        lastDate: DateTime(2012),
       ).then((date) {
         setState(() {
           if (date != null) {

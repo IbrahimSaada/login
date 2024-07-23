@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:login2/login/login_page.dart';
+
 class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

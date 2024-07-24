@@ -2,8 +2,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserVerificationService {
-  final String baseUrl =
-      'https://9fe9-185-97-92-59.ngrok-free.app/api/Registration';
+  final String baseUrl = 'https://localhost:7002/api/Registration';
 
   Future<bool> verifyUser(String email, String verificationCode) async {
     final response = await http.post(

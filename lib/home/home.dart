@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
 import 'package:login2/menu/menu_page.dart';
-
+import 'comment_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -287,6 +287,11 @@ class _HomePageState extends State<HomePage> {
                           child: Image.asset('assets/icons/comments.png'),
                         ),
                         onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CommentPage()),
+                          );
                           setState(() {
                             commentCount++;
                           });

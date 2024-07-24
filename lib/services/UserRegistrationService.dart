@@ -4,7 +4,7 @@ import '../models/user_model.dart';
 
 class UserRegistrationService {
   final String baseUrl =
-      'https://7d3f-185-97-92-59.ngrok-free.app/api/Registration';
+      'https://d8b8-185-97-92-59.ngrok-free.app/api/Registration';
 
   Future<void> registerUser(UserModel user) async {
     final response = await http.post(

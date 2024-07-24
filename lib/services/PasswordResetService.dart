@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class PasswordResetService {
   final String baseUrl =
-      'https://7d3f-185-97-92-59.ngrok-free.app/api/ResetPassword';
+      'https://d8b8-185-97-92-59.ngrok-free.app/api/ResetPassword';
 
   Future<void> requestPasswordReset(String emailOrPhoneNumber) async {
     final response = await http.post(

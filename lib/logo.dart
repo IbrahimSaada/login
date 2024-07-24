@@ -1,10 +1,8 @@
-// logo.dart
 import 'package:flutter/material.dart';
-
 import 'dart:async';
-import 'login/login_page.dart'; // Assuming the class name is Login in this file
-
-
+import 'package:login2/login/login_page.dart';
+import 'package:login2/services/LoginService.dart';
+import 'package:login2/home/home.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,14 +28,23 @@ class _SplashScreenState extends State<SplashScreen>
       curve: Curves.easeIn,
     );
 
-    Timer(const Duration(seconds: 3), () {//use const to make the app faster
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                const LoginPage()), // Use Login instead of LoginPage
+    _navigateToNextScreen();
+  }
+
+  Future<void> _navigateToNextScreen() async {
+    await Future.delayed(
+        const Duration(seconds: 3)); // Simulate a delay for the splash screen
+    bool isLoggedIn = await LoginService().isLoggedIn();
+
+    if (isLoggedIn) {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => HomePage()),
       );
-    });
+    } else {
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    }
   }
 
   @override
@@ -52,8 +59,7 @@ class _SplashScreenState extends State<SplashScreen>
       body: FadeTransition(
         opacity: _animation,
         child: Center(
-          child: Image.asset(
-              'assets/realistic logo.png'), // Make sure to add your image to the assets folder
+          child: Image.asset('assets/realistic logo.png'),
         ),
       ),
     );

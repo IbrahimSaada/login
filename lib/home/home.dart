@@ -2,19 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
 import 'package:login2/menu/menu_page.dart';
-
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
-    );
-  }
-}
+import 'package:login2/services/SecureService.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -26,6 +14,29 @@ class _HomePageState extends State<HomePage> {
   final TextEditingController _postController = TextEditingController();
   int likeCount = 0;
   int commentCount = 0;
+
+  final SecureService _secureService = SecureService();
+  String _secureData = "Loading...";
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSecureData();
+  }
+
+  void _loadSecureData() async {
+    try {
+      var data = await _secureService.getSecureData();
+      setState(() {
+        _secureData = data;
+      });
+    } catch (e) {
+      setState(() {
+        _secureData = "Failed to load secure data: ${e.toString()}";
+      });
+      print('Error: $e');
+    }
+  }
 
   Widget makeStory({
     required String storyImage,
@@ -326,6 +337,13 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ],
+              ),
+            ),
+            SizedBox(height: 16.0),
+            Center(
+              child: Text(
+                _secureData,
+                style: TextStyle(fontSize: 16.0, color: Colors.red),
               ),
             ),
           ],

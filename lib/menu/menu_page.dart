@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:login2/menu/profile_page.dart';
 import 'package:login2/login/login_page.dart';
 import 'package:login2/menu/setting_page.dart';
+import 'package:login2/services/LoginService.dart';
 
 class MenuPage extends StatelessWidget {
   @override
@@ -51,9 +52,8 @@ class MenuPage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.settings, color: Colors.orange),
               title: Text('Setting'),
-               onTap: () {
-                // logout function
-                Navigator.pushReplacement(
+              onTap: () {
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => SettingPage()),
                 );
@@ -62,8 +62,9 @@ class MenuPage extends StatelessWidget {
             ListTile(
               leading: Icon(Icons.logout, color: Colors.pink),
               title: Text('Logout'),
-              onTap: () {
-                // logout function
+              onTap: () async {
+                // Logout function
+                await LoginService().logout();
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

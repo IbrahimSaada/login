@@ -142,6 +142,14 @@ class _HomePageState extends State<HomePage> {
             icon: Container(
               width: 30,
               height: 30,
+              child: Image.asset('assets/icons/notification.png'),
+            ),
+            onPressed: () {}
+          ),
+          IconButton(
+            icon: Container(
+              width: 30,
+              height: 30,
               child: Image.asset('assets/icons/menu.png'),
             ),
             onPressed: () {
@@ -249,18 +257,38 @@ class _HomePageState extends State<HomePage> {
                             NetworkImage('https://picsum.photos/50/50'),
                       ),
                       SizedBox(width: 8.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Ahmed Ghosen',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text('19 hr'),
-                        ],
-                      ),
+                      Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Ahmed Ghosen',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text('19 hr'),
+      ],
+    ),
+      SizedBox(width: 190),
+    PopupMenuButton(
+      itemBuilder: (context) => [
+        PopupMenuItem(
+          child: Text('Hide this post'),
+        ),
+        PopupMenuItem(
+          child: Text('Report'),
+        ),
+        PopupMenuItem(
+          child: Text('Block'),
+        ),
+      ],
+      child: Icon(Icons.more_vert), // Three dots icon
+    ),
+  ],
+),
                     ],
                   ),
                   SizedBox(height: 16.0),
@@ -315,6 +343,15 @@ class _HomePageState extends State<HomePage> {
                           width: 30,
                           height: 30,
                           child: Image.asset('assets/icons/share-arrow.png'),
+                        ),
+                        onPressed: () {},
+                      ),
+                        SizedBox(width: 150),
+                      IconButton(
+                        icon: Container(
+                          width: 30,
+                          height: 30,
+                          child: Icon(Icons.bookmark, color: Colors.orange),
                         ),
                         onPressed: () {},
                       ),

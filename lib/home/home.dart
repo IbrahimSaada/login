@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
+import 'package:login2/home/notification_page.dart';
 import 'package:login2/menu/menu_page.dart';
 import 'package:login2/services/SecureService.dart';
 import 'comment_page.dart';
@@ -144,8 +145,14 @@ class _HomePageState extends State<HomePage> {
               height: 30,
               child: Image.asset('assets/icons/notification.png'),
             ),
-            onPressed: () {}
+             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationPage()),
+              );
+            },
           ),
+         
           IconButton(
             icon: Container(
               width: 30,

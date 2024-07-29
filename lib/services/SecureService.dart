@@ -5,7 +5,7 @@ import 'LoginService.dart';
 class SecureService {
   final LoginService _loginService = LoginService();
   final String secureUrl =
-      'https://d8b8-185-97-92-59.ngrok-free.app/api/Secure/data';
+      'http://development.eba-avjg3zuv.eu-central-1.elasticbeanstalk.com/api/Secure/data';
 
   Future<String> getSecureData() async {
     var token = await _loginService.getToken();

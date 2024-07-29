@@ -42,7 +42,9 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> _pickMedia({required bool isVideo}) async {
     final ImagePicker _picker = ImagePicker();
-    final XFile? media = await (isVideo ? _picker.pickVideo(source: ImageSource.gallery) : _picker.pickImage(source: ImageSource.gallery));
+    final XFile? media = await (isVideo
+        ? _picker.pickVideo(source: ImageSource.gallery)
+        : _picker.pickImage(source: ImageSource.gallery));
 
     if (media != null) {
       setState(() {
@@ -111,10 +113,12 @@ class _ChatPageState extends State<ChatPage> {
                 return Column(
                   children: [
                     if (index == 0 ||
-                        !isSameDay(messages[index - 1]['date'], message['date']))
+                        !isSameDay(
+                            messages[index - 1]['date'], message['date']))
                       Text(
                         DateFormat('yyyy-MM-dd').format(message['date']),
-                        style: TextStyle(color: Color.fromARGB(255, 158, 158, 158)),
+                        style: TextStyle(
+                            color: Color.fromARGB(255, 158, 158, 158)),
                       ),
                     ChatMessage(
                       text: message['text'],
@@ -165,7 +169,12 @@ class ChatMessage extends StatelessWidget {
   final String? audio;
   final bool isSentByMe;
 
-  ChatMessage({this.text, this.image, this.video, this.audio, required this.isSentByMe});
+  ChatMessage(
+      {this.text,
+      this.image,
+      this.video,
+      this.audio,
+      required this.isSentByMe});
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +192,8 @@ class ChatMessage extends StatelessWidget {
     } else if (video != null) {
       messageContent = VideoPlayerWidget(videoUrl: video!);
     } else if (audio != null) {
-      messageContent = Icon(Icons.audiotrack, color: isSentByMe ? Colors.white : Colors.black87);
+      messageContent = Icon(Icons.audiotrack,
+          color: isSentByMe ? Colors.white : Colors.black87);
       // Add audio playback functionality here
     } else {
       messageContent = SizedBox.shrink();
@@ -280,7 +290,8 @@ class _MessageComposerState extends State<MessageComposer> {
             onPressed: widget.onPickVideo as void Function()?,
           ),
           IconButton(
-            icon: Icon(widget.isRecording ? Icons.stop : Icons.mic, color: Colors.orange),
+            icon: Icon(widget.isRecording ? Icons.stop : Icons.mic,
+                color: Colors.orange),
             onPressed: widget.onRecordVoice as void Function()?,
           ),
           Expanded(

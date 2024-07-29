@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class PasswordResetService {
   final String baseUrl =
-      'https://d8b8-185-97-92-59.ngrok-free.app/api/ResetPassword';
+      'http://development.eba-avjg3zuv.eu-central-1.elasticbeanstalk.com/api/ResetPassword';
 
   Future<void> requestPasswordReset(String emailOrPhoneNumber) async {
     final response = await http.post(

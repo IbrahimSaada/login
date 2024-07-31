@@ -99,296 +99,263 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Project'),
-        actions: [
-          IconButton(
-            icon: Container(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/icons/video.png'),
+  PreferredSizeWidget buildAppBar() {
+    return PreferredSize(
+      preferredSize: Size.fromHeight(100.0),
+      child: AppBar(
+        backgroundColor: Colors.white,
+        flexibleSpace: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(
+              'Project',
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Container(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/icons/add-friend.png'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.videocam, color: Colors.orange),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.person_add, color: Colors.orange),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddFriendsPage()),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.message, color: Colors.orange),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ContactsPage()),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.notifications, color: Colors.orange),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NotificationPage()),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: Icon(Icons.menu, color: Colors.orange),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => MenuPage()),
+                    );
+                  },
+                ),
+              ],
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => AddFriendsPage()),
-              );
-            },
-          ),
-          IconButton(
-            icon: Container(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/icons/speech-bubble.png'),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ContactsPage()),
-              );
-            },
-          ),
-          IconButton(
-            icon: Container(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/icons/notification.png'),
-            ),
-             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => NotificationPage()),
-              );
-            },
-          ),
-         
-          IconButton(
-            icon: Container(
-              width: 30,
-              height: 30,
-              child: Image.asset('assets/icons/menu.png'),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MenuPage()),
-              );
-            },
-          ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildStoriesSection() {
+    return Container(
+      height: 190,
+      padding: EdgeInsets.symmetric(vertical: 10),
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: <Widget>[
+          makeStory(
+              storyImage: 'assets/food.jpg',
+              userImage: 'assets/chef.jpg',
+              userName: 'Ahmad Ghosen'),
+          makeStory(
+              storyImage: 'assets/1.png',
+              userImage: 'assets/1.png',
+              userName: 'Aatik Tasneem'),
+          makeStory(
+              storyImage: 'assets/2.jpg',
+              userImage: 'assets/2.jpg',
+              userName: 'Aiony Haust'),
+          makeStory(
+              storyImage: 'assets/3.jpg',
+              userImage: 'assets/3.jpg',
+              userName: 'Averie Woodard'),
+          makeStory(
+              storyImage: 'assets/4.jpg',
+              userImage: 'assets/4.jpg',
+              userName: 'Azamat Zhanisov'),
         ],
       ),
-      body: SingleChildScrollView(
+    );
+  }
+
+  Widget buildShareSection() {
+    return Form(
+      key: _formKey,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            Container(
-              height: 200,
-              padding: EdgeInsets.symmetric(vertical: 10),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  makeStory(
-                      storyImage: 'assets/food.jpg',
-                      userImage: 'assets/chef.jpg',
-                      userName: 'Ahmad Ghosen'),
-                  makeStory(
-                      storyImage: 'assets/1.png',
-                      userImage: 'assets/1.png',
-                      userName: 'Aatik Tasneem'),
-                  makeStory(
-                      storyImage: 'assets/2.jpg',
-                      userImage: 'assets/2.jpg',
-                      userName: 'Aiony Haust'),
-                  makeStory(
-                      storyImage: 'assets/3.jpg',
-                      userImage: 'assets/3.jpg',
-                      userName: 'Averie Woodard'),
-                  makeStory(
-                      storyImage: 'assets/4.jpg',
-                      userImage: 'assets/4.jpg',
-                      userName: 'Azamat Zhanisov'),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            Form(
-              key: _formKey,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Stack(
-                      children: [
-                        TextFormField(
-                          controller: _postController,
-                          decoration: InputDecoration(
-                            labelText: 'What you want to share...',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(30.0),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          right: 0,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              IconButton(
-                                icon: Container(
-                                  width: 30,
-                                  height: 30,
-                                  child: Image.asset(
-                                      'assets/icons/photo-camera.png'),
-                                ),
-                                onPressed: () {},
-                              ),
-                              IconButton(
-                                icon: Container(
-                                  width: 30,
-                                  height: 30,
-                                  child:
-                                      Image.asset('assets/icons/gallery.png'),
-                                ),
-                                onPressed: () {},
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+            Stack(
+              children: [
+                TextFormField(
+                  controller: _postController,
+                  decoration: InputDecoration(
+                    labelText: 'What do you want to share...',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(30.0),
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                Positioned(
+                  right: 0,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.camera_alt, color: Colors.orange),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.photo, color: Colors.orange),
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildPostSection() {
+    return Container(
+      width: double.infinity, // Ensure the container takes full width
+      padding:
+          EdgeInsets.symmetric(horizontal: 0), // Ensure no horizontal padding
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage('https://picsum.photos/50/50'),
+              ),
+              SizedBox(width: 8.0),
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        backgroundImage:
-                            NetworkImage('https://picsum.photos/50/50'),
-                      ),
-                      SizedBox(width: 8.0),
-                      Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Ahmed Ghosen',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text('19 hr'),
-      ],
-    ),
-      SizedBox(width: 190),
-    PopupMenuButton(
-      itemBuilder: (context) => [
-        PopupMenuItem(
-          child: Text('Hide this post'),
-        ),
-        PopupMenuItem(
-          child: Text('Report'),
-        ),
-        PopupMenuItem(
-          child: Text('Block'),
-        ),
-      ],
-      child: Icon(Icons.more_vert), // Three dots icon
-    ),
-  ],
-),
-                    ],
-                  ),
-                  SizedBox(height: 16.0),
                   Text(
-                    'Our post:',
-                    style: TextStyle(fontSize: 16.0),
-                  ),
-                  SizedBox(height: 16.0),
-                  Image.network(
-                    'https://picsum.photos/600/300',
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
-                  SizedBox(height: 16.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      IconButton(
-                        icon: Container(
-                          width: 30,
-                          height: 30,
-                          child: Image.asset('assets/icons/favorite.png'),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            likeCount++;
-                          });
-                        },
-                      ),
-                      Text('$likeCount'),
-                      SizedBox(width: 16.0),
-                      IconButton(
-                        icon: Container(
-                          width: 30,
-                          height: 30,
-                          child: Image.asset('assets/icons/comments.png'),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CommentPage()),
-                          );
-                          setState(() {
-                            commentCount++;
-                          });
-                        },
-                      ),
-                      Text('$commentCount'),
-                      IconButton(
-                        icon: Container(
-                          width: 30,
-                          height: 30,
-                          child: Image.asset('assets/icons/share-arrow.png'),
-                        ),
-                        onPressed: () {},
-                      ),
-                        SizedBox(width: 150),
-                      IconButton(
-                        icon: Container(
-                          width: 30,
-                          height: 30,
-                          child: Icon(Icons.bookmark, color: Colors.orange),
-                        ),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16.0),
-                  Text(
-                    'Comments',
+                    'Ahmed Ghosen',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 8.0),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage('https://picsum.photos/50/50'),
-                        ),
-                        title: Text('Comment ${index + 1}'),
-                      );
-                    },
-                  ),
+                  Text('19 hr'),
                 ],
               ),
+              Spacer(),
+              PopupMenuButton(
+                itemBuilder: (context) => [
+                  PopupMenuItem(
+                    child: Text('Hide this post'),
+                  ),
+                  PopupMenuItem(
+                    child: Text('Report'),
+                  ),
+                  PopupMenuItem(
+                    child: Text('Block'),
+                  ),
+                ],
+                child: Icon(Icons.more_vert, color: Colors.orange),
+              ),
+            ],
+          ),
+          SizedBox(height: 16.0),
+          Text(
+            'Our post:',
+            style: TextStyle(fontSize: 16.0),
+          ),
+          SizedBox(height: 16.0),
+          Container(
+            width: double.infinity, // Ensure the container takes full width
+            child: Image.network(
+              'https://picsum.photos/600/300',
+              fit: BoxFit.cover,
+              width: double.infinity, // Ensure the image takes full width
             ),
+          ),
+          SizedBox(height: 16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              IconButton(
+                icon: Icon(Icons.favorite, color: Colors.orange),
+                onPressed: () {
+                  setState(() {
+                    likeCount++;
+                  });
+                },
+              ),
+              Text('$likeCount'),
+              SizedBox(width: 16.0),
+              IconButton(
+                icon: Icon(Icons.comment, color: Colors.orange),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CommentPage()),
+                  );
+                  setState(() {
+                    commentCount++;
+                  });
+                },
+              ),
+              Text('$commentCount'),
+              IconButton(
+                icon: Icon(Icons.share, color: Colors.orange),
+                onPressed: () {},
+              ),
+              Spacer(),
+              IconButton(
+                icon: Icon(Icons.bookmark, color: Colors.orange),
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: buildAppBar(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Divider(thickness: 2, color: Colors.grey[300]),
+            buildStoriesSection(),
+            Divider(thickness: 2, color: Colors.grey[300]), // Separator
+            buildShareSection(),
+            Divider(thickness: 2, color: Colors.grey[300]), // Separator
+            buildPostSection(),
             SizedBox(height: 16.0),
             Center(
               child: Text(

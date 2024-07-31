@@ -101,67 +101,83 @@ class _HomePageState extends State<HomePage> {
 
   PreferredSizeWidget buildAppBar() {
     return PreferredSize(
-      preferredSize: Size.fromHeight(100.0),
+      preferredSize: Size.fromHeight(120.0),
       child: AppBar(
         backgroundColor: Colors.white,
-        flexibleSpace: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              'Project',
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.only(top: 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjusted padding
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.menu, color: Colors.orange),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => MenuPage()),
+                        );
+                      },
+                    ),
+                    Text(
+                      'Project',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 48.0), // Placeholder for alignment
+                  ],
+                ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.videocam, color: Colors.orange),
-                  onPressed: () {},
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjusted padding
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.person_add, color: Colors.orange),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => AddFriendsPage()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.videocam, color: Colors.orange),
+                      onPressed: () {},
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.notifications, color: Colors.orange),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NotificationPage()),
+                        );
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.message, color: Colors.orange),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => ContactsPage()),
+                        );
+                      },
+                    ),
+                  ],
                 ),
-                IconButton(
-                  icon: Icon(Icons.person_add, color: Colors.orange),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddFriendsPage()),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.message, color: Colors.orange),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ContactsPage()),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.notifications, color: Colors.orange),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => NotificationPage()),
-                    );
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.menu, color: Colors.orange),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MenuPage()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -245,9 +261,8 @@ class _HomePageState extends State<HomePage> {
 
   Widget buildPostSection() {
     return Container(
-      width: double.infinity, // Ensure the container takes full width
-      padding:
-          EdgeInsets.symmetric(horizontal: 0), // Ensure no horizontal padding
+      width: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -293,11 +308,11 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: 16.0),
           Container(
-            width: double.infinity, // Ensure the container takes full width
+            width: double.infinity,
             child: Image.network(
               'https://picsum.photos/600/300',
               fit: BoxFit.cover,
-              width: double.infinity, // Ensure the image takes full width
+              width: double.infinity,
             ),
           ),
           SizedBox(height: 16.0),

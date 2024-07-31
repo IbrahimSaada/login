@@ -4,6 +4,7 @@ import 'package:login2/home/contacts_page.dart';
 import 'package:login2/home/notification_page.dart';
 import 'package:login2/menu/menu_page.dart';
 import 'package:login2/services/SecureService.dart';
+import 'package:login2/home/full_screen_image_page.dart'; // Correct import
 import 'comment_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -104,6 +105,7 @@ class _HomePageState extends State<HomePage> {
       preferredSize: Size.fromHeight(120.0),
       child: AppBar(
         backgroundColor: Colors.white,
+        automaticallyImplyLeading: false,
         flexibleSpace: Padding(
           padding: const EdgeInsets.only(top: 30.0),
           child: Column(
@@ -111,7 +113,8 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjusted padding
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0), // Adjusted padding
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -138,7 +141,8 @@ class _HomePageState extends State<HomePage> {
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjusted padding
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 8.0), // Adjusted padding
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -147,7 +151,8 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => AddFriendsPage()),
+                          MaterialPageRoute(
+                              builder: (context) => AddFriendsPage()),
                         );
                       },
                     ),
@@ -160,7 +165,8 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NotificationPage()),
+                          MaterialPageRoute(
+                              builder: (context) => NotificationPage()),
                         );
                       },
                     ),
@@ -169,7 +175,8 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => ContactsPage()),
+                          MaterialPageRoute(
+                              builder: (context) => ContactsPage()),
                         );
                       },
                     ),
@@ -307,12 +314,24 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(fontSize: 16.0),
           ),
           SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            child: Image.network(
-              'https://picsum.photos/600/300',
-              fit: BoxFit.cover,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FullScreenImagePage(
+                    imageUrl: 'https://picsum.photos/600/300',
+                  ),
+                ),
+              );
+            },
+            child: Container(
               width: double.infinity,
+              child: Image.network(
+                'https://picsum.photos/600/300',
+                fit: BoxFit.cover,
+                width: double.infinity,
+              ),
             ),
           ),
           SizedBox(height: 16.0),
@@ -365,11 +384,15 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Divider(thickness: 2, color: Colors.grey[300]),
+            Divider(
+              thickness: 2,
+              color: Colors.grey[300],
+              height: 1,
+            ),
             buildStoriesSection(),
-            Divider(thickness: 2, color: Colors.grey[300]), // Separator
+            Divider(thickness: 1, color: Colors.grey[300]), // Separator
             buildShareSection(),
-            Divider(thickness: 2, color: Colors.grey[300]), // Separator
+            Divider(thickness: 1, color: Colors.grey[300]), // Separator
             buildPostSection(),
             SizedBox(height: 16.0),
             Center(

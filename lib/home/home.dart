@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
 import 'package:login2/home/notification_page.dart';
 import 'package:login2/menu/menu_page.dart';
 import 'package:login2/services/SecureService.dart';
-import 'package:login2/home/full_screen_image_page.dart'; // Correct import
+import 'package:login2/home/full_screen_image_page.dart';
 import 'comment_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,80 +25,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadSecureData();
-  }
-
-  void _loadSecureData() async {
-    try {
-      var data = await _secureService.getSecureData();
+    // Simulate data loading
+    Future.delayed(Duration(seconds: 2), () {
       setState(() {
-        _secureData = data;
+        _secureData = "Secure data loaded";
       });
-    } catch (e) {
-      setState(() {
-        _secureData = "Failed to load secure data: ${e.toString()}";
-      });
-      print('Error: $e');
-    }
-  }
-
-  Widget makeStory({
-    required String storyImage,
-    required String userImage,
-    required String userName,
-  }) {
-    return Container(
-      width: 100,
-      margin: EdgeInsets.only(right: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        image: DecorationImage(
-          image: AssetImage(storyImage),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: Stack(
-        children: [
-          Positioned(
-            top: 8,
-            left: 8,
-            child: Container(
-              width: 35,
-              height: 35,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.blueAccent, width: 2),
-                image: DecorationImage(
-                  image: AssetImage(userImage),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
-            child: Text(
-              userName,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10.0,
-                    color: Colors.black,
-                    offset: Offset(2.0, 2.0),
-                  ),
-                ],
-              ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
+    });
   }
 
   PreferredSizeWidget buildAppBar() {
@@ -113,8 +46,7 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0), // Adjusted padding
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -135,14 +67,13 @@ class _HomePageState extends State<HomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    SizedBox(width: 48.0), // Placeholder for alignment
+                    SizedBox(width: 48.0),
                   ],
                 ),
               ),
               SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0), // Adjusted padding
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -190,186 +121,264 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildStoriesSection() {
+  Widget buildSkeletonStoriesSection() {
     return Container(
       height: 190,
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: ListView(
+      child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        children: <Widget>[
-          makeStory(
-              storyImage: 'assets/food.jpg',
-              userImage: 'assets/chef.jpg',
-              userName: 'Ahmad Ghosen'),
-          makeStory(
-              storyImage: 'assets/1.png',
-              userImage: 'assets/1.png',
-              userName: 'Aatik Tasneem'),
-          makeStory(
-              storyImage: 'assets/2.jpg',
-              userImage: 'assets/2.jpg',
-              userName: 'Aiony Haust'),
-          makeStory(
-              storyImage: 'assets/3.jpg',
-              userImage: 'assets/3.jpg',
-              userName: 'Averie Woodard'),
-          makeStory(
-              storyImage: 'assets/4.jpg',
-              userImage: 'assets/4.jpg',
-              userName: 'Azamat Zhanisov'),
-        ],
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Container(
+            width: 100,
+            margin: EdgeInsets.only(right: 10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.grey[300],
+            ),
+            child: Shimmer.fromColors(
+              baseColor: Colors.grey[300]!,
+              highlightColor: Colors.grey[100]!,
+              child: Container(
+                color: Colors.grey[300],
+              ),
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget buildShareSection() {
-    return Form(
-      key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Stack(
-              children: [
-                TextFormField(
-                  controller: _postController,
-                  decoration: InputDecoration(
-                    labelText: 'What do you want to share...',
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30.0),
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  right: 0,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.camera_alt, color: Colors.orange),
-                        onPressed: () {},
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.photo, color: Colors.orange),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ],
+  Widget buildSkeletonShareSection() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          height: 60.0,
+          decoration: BoxDecoration(
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(30.0),
+          ),
         ),
       ),
     );
   }
 
-  Widget buildPostSection() {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.symmetric(horizontal: 0),
+  Widget buildSkeletonPostSection() {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          buildSkeletonPost(),
+          SizedBox(height: 16.0),
+          buildSkeletonPostWithCaption(),
+          SizedBox(height: 16.0),
+          buildSkeletonCaptionOnlyPost(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSkeletonPost() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               CircleAvatar(
-                backgroundImage: NetworkImage('https://picsum.photos/50/50'),
+                backgroundColor: Colors.grey[300],
+                radius: 25,
               ),
               SizedBox(width: 8.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Ahmed Ghosen',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Container(
+                    width: 100,
+                    height: 10,
+                    color: Colors.grey[300],
                   ),
-                  Text('19 hr'),
+                  SizedBox(height: 5),
+                  Container(
+                    width: 50,
+                    height: 10,
+                    color: Colors.grey[300],
+                  ),
                 ],
               ),
               Spacer(),
-              PopupMenuButton(
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    child: Text('Hide this post'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Report'),
-                  ),
-                  PopupMenuItem(
-                    child: Text('Block'),
-                  ),
-                ],
-                child: Icon(Icons.more_vert, color: Colors.orange),
-              ),
+              Icon(Icons.more_vert, color: Colors.grey[300]),
             ],
           ),
           SizedBox(height: 16.0),
-          Text(
-            'Our post:',
-            style: TextStyle(fontSize: 16.0),
-          ),
-          SizedBox(height: 16.0),
-          GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FullScreenImagePage(
-                    imageUrl: 'https://picsum.photos/600/300',
-                  ),
-                ),
-              );
-            },
-            child: Container(
-              width: double.infinity,
-              child: Image.network(
-                'https://picsum.photos/600/300',
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
-            ),
+          Container(
+            width: double.infinity,
+            height: 150,
+            color: Colors.grey[300],
           ),
           SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              IconButton(
-                icon: Icon(Icons.favorite, color: Colors.orange),
-                onPressed: () {
-                  setState(() {
-                    likeCount++;
-                  });
-                },
-              ),
-              Text('$likeCount'),
+              Icon(Icons.favorite, color: Colors.grey[300]),
               SizedBox(width: 16.0),
-              IconButton(
-                icon: Icon(Icons.comment, color: Colors.orange),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => CommentPage()),
-                  );
-                  setState(() {
-                    commentCount++;
-                  });
-                },
+              Icon(Icons.comment, color: Colors.grey[300]),
+              SizedBox(width: 16.0),
+              Icon(Icons.share, color: Colors.grey[300]),
+              Spacer(),
+              Icon(Icons.bookmark, color: Colors.grey[300]),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSkeletonPostWithCaption() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                radius: 25,
               ),
-              Text('$commentCount'),
-              IconButton(
-                icon: Icon(Icons.share, color: Colors.orange),
-                onPressed: () {},
+              SizedBox(width: 8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 10,
+                    color: Colors.grey[300],
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    width: 50,
+                    height: 10,
+                    color: Colors.grey[300],
+                  ),
+                ],
               ),
               Spacer(),
-              IconButton(
-                icon: Icon(Icons.bookmark, color: Colors.orange),
-                onPressed: () {},
+              Icon(Icons.more_vert, color: Colors.grey[300]),
+            ],
+          ),
+          SizedBox(height: 16.0),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 5),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 5),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 16.0),
+          Container(
+            width: double.infinity,
+            height: 150,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.favorite, color: Colors.grey[300]),
+              SizedBox(width: 16.0),
+              Icon(Icons.comment, color: Colors.grey[300]),
+              SizedBox(width: 16.0),
+              Icon(Icons.share, color: Colors.grey[300]),
+              Spacer(),
+              Icon(Icons.bookmark, color: Colors.grey[300]),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildSkeletonCaptionOnlyPost() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.grey[300],
+                radius: 25,
               ),
+              SizedBox(width: 8.0),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 10,
+                    color: Colors.grey[300],
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    width: 50,
+                    height: 10,
+                    color: Colors.grey[300],
+                  ),
+                ],
+              ),
+              Spacer(),
+              Icon(Icons.more_vert, color: Colors.grey[300]),
+            ],
+          ),
+          SizedBox(height: 16.0),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 5),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 5),
+          Container(
+            width: double.infinity,
+            height: 20,
+            color: Colors.grey[300],
+          ),
+          SizedBox(height: 16.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(Icons.favorite, color: Colors.grey[300]),
+              SizedBox(width: 16.0),
+              Icon(Icons.comment, color: Colors.grey[300]),
+              SizedBox(width: 16.0),
+              Icon(Icons.share, color: Colors.grey[300]),
+              Spacer(),
+              Icon(Icons.bookmark, color: Colors.grey[300]),
             ],
           ),
         ],
@@ -379,6 +388,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = _secureData == "Loading...";
     return Scaffold(
       appBar: buildAppBar(),
       body: SingleChildScrollView(
@@ -389,18 +399,23 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey[300],
               height: 1,
             ),
-            buildStoriesSection(),
+            isLoading
+                ? buildSkeletonStoriesSection()
+                : buildSkeletonStoriesSection(),
             Divider(thickness: 1, color: Colors.grey[300]), // Separator
-            buildShareSection(),
+            isLoading
+                ? buildSkeletonShareSection()
+                : buildSkeletonShareSection(),
             Divider(thickness: 1, color: Colors.grey[300]), // Separator
-            buildPostSection(),
+            isLoading ? buildSkeletonPostSection() : buildSkeletonPostSection(),
             SizedBox(height: 16.0),
-            Center(
-              child: Text(
-                _secureData,
-                style: TextStyle(fontSize: 16.0, color: Colors.red),
+            if (!isLoading)
+              Center(
+                child: Text(
+                  _secureData,
+                  style: TextStyle(fontSize: 16.0, color: Colors.red),
+                ),
               ),
-            ),
           ],
         ),
       ),

@@ -1,10 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:login2/home/chat_page.dart'; // Import the chat_page
 
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Contacts App',
+      theme: ThemeData(
+        primarySwatch: Colors.orange,
+        scaffoldBackgroundColor: Colors.white,
+      ),
+      home: ContactsPage(),
+    );
+  }
+}
+
 class ContactsPage extends StatelessWidget {
   final List<Contact> contacts = [
     Contact(
-        name: 'John Doe',
+        name: 'Ibrahim Saada',
         description: 'Software Engineer',
         imageUrl: 'https://via.placeholder.com/150',
         lastSeen: '2 hours ago',
@@ -18,7 +34,7 @@ class ContactsPage extends StatelessWidget {
         lastMessage: 'See you tomorrow!',
         isOnline: false),
     Contact(
-        name: 'Michael Brown',
+        name: 'Michael Brow',
         description: 'UX Designer',
         imageUrl: 'https://via.placeholder.com/150',
         lastSeen: '1 hour ago',
@@ -32,16 +48,9 @@ class ContactsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Contacts'),
         backgroundColor: Colors.orange,
-        actions: [
-          IconButton(
-            icon: Icon(Icons.camera_alt),
-            onPressed: () {
-              // Handle camera action
-            },
-          ),
-        ],
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
@@ -99,14 +108,14 @@ class Contact {
 
 class ContactCard extends StatelessWidget {
   final Contact contact;
-  final VoidCallback onTap; // Add this callback
+  final VoidCallback onTap;
 
   ContactCard({required this.contact, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(8.0),
+      margin: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),
@@ -115,7 +124,7 @@ class ContactCard extends StatelessWidget {
           children: [
             CircleAvatar(
               backgroundImage: NetworkImage(contact.imageUrl),
-              radius: 25.0,
+              radius: 30.0,
             ),
             if (contact.isOnline)
               Positioned(
@@ -128,18 +137,30 @@ class ContactCard extends StatelessWidget {
               ),
           ],
         ),
-        title: Text(contact.name),
+        title: Text(
+          contact.name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
+          ),
+        ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(contact.description),
-            Text(contact.lastMessage.isNotEmpty
-                ? 'Message: ${contact.lastMessage}'
-                : 'Last seen: ${contact.lastSeen}'),
+            SizedBox(height: 4.0),
+            Text(
+              contact.lastMessage.isNotEmpty
+                  ? 'Message: ${contact.lastMessage}'
+                  : 'Last seen: ${contact.lastSeen}',
+              style: TextStyle(
+                fontSize: 12.0,
+                color: Colors.grey,
+              ),
+            ),
           ],
         ),
-        trailing: Icon(Icons.camera_alt, color: Colors.orange),
-        onTap: onTap, // Call the callback when tapped
+        onTap: onTap,
       ),
     );
   }

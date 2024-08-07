@@ -6,7 +6,9 @@ import 'package:login2/home/notification_page.dart';
 import 'package:login2/menu/menu_page.dart';
 import 'package:login2/services/SecureService.dart';
 import 'package:login2/home/full_screen_image_page.dart';
-import 'comment_page.dart';
+import 'package:login2/home/comment_page.dart';
+import 'package:login2/services/post_service.dart'; // Import your service
+import 'package:login2/models/post_model.dart'; // Import your model
 
 class HomePage extends StatefulWidget {
   @override
@@ -21,16 +23,30 @@ class _HomePageState extends State<HomePage> {
 
   final SecureService _secureService = SecureService();
   String _secureData = "Loading...";
+  List<Post> _posts = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    // Simulate data loading
-    Future.delayed(Duration(seconds: 2), () {
+    _fetchPosts();
+  }
+
+  Future<void> _fetchPosts() async {
+    try {
+      List<Post> posts =
+          await PostService.fetchPosts(); // Call the static method
       setState(() {
-        _secureData = "Secure data loaded";
+        _posts = posts;
+        _isLoading = false;
       });
-    });
+    } catch (e) {
+      // Handle the error appropriately
+      print('Failed to load posts: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   PreferredSizeWidget buildAppBar() {
@@ -386,9 +402,111 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget buildPost(Post post) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(post.profilePic),
+            ),
+            SizedBox(width: 8.0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  post.fullName,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(post.createdAt.toString()),
+              ],
+            ),
+            Spacer(),
+            PopupMenuButton(
+              itemBuilder: (context) => [
+                PopupMenuItem(
+                  child: Text('Hide this post'),
+                ),
+                PopupMenuItem(
+                  child: Text('Report'),
+                ),
+                PopupMenuItem(
+                  child: Text('Block'),
+                ),
+              ],
+              child: Icon(Icons.more_vert, color: Colors.orange),
+            ),
+          ],
+        ),
+        SizedBox(height: 16.0),
+        Text(
+          post.caption ?? '',
+          style: TextStyle(fontSize: 16.0),
+        ),
+        if (post.mediaUrl != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context)
+                    .size
+                    .width, // Ensure the image does not exceed screen width
+              ),
+              child: Image.network(
+                post.mediaUrl!,
+                fit: BoxFit.contain,
+                width: double.infinity,
+              ),
+            ),
+          ),
+        SizedBox(height: 16.0),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            IconButton(
+              icon: Icon(Icons.favorite, color: Colors.orange),
+              onPressed: () {
+                setState(() {
+                  likeCount++;
+                });
+              },
+            ),
+            Text('${post.likeCount}'),
+            SizedBox(width: 16.0),
+            IconButton(
+              icon: Icon(Icons.comment, color: Colors.orange),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => CommentPage(postId: post.postId)),
+                );
+                setState(() {
+                  commentCount++;
+                });
+              },
+            ),
+            Text('${post.commentCount}'),
+            IconButton(
+              icon: Icon(Icons.share, color: Colors.orange),
+              onPressed: () {},
+            ),
+            Spacer(),
+            IconButton(
+              icon: Icon(Icons.bookmark, color: Colors.orange),
+              onPressed: () {},
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    bool isLoading = _secureData == "Loading...";
     return Scaffold(
       appBar: buildAppBar(),
       body: SingleChildScrollView(
@@ -399,23 +517,20 @@ class _HomePageState extends State<HomePage> {
               color: Colors.grey[300],
               height: 1,
             ),
-            isLoading
+            _isLoading
                 ? buildSkeletonStoriesSection()
-                : buildSkeletonStoriesSection(),
+                : Container(), // Replace with actual stories when available
             Divider(thickness: 1, color: Colors.grey[300]), // Separator
-            isLoading
+            _isLoading
                 ? buildSkeletonShareSection()
-                : buildSkeletonShareSection(),
+                : Container(), // Replace with actual share section when available
             Divider(thickness: 1, color: Colors.grey[300]), // Separator
-            isLoading ? buildSkeletonPostSection() : buildSkeletonPostSection(),
+            _isLoading
+                ? buildSkeletonPostSection()
+                : Column(
+                    children: _posts.map((post) => buildPost(post)).toList(),
+                  ),
             SizedBox(height: 16.0),
-            if (!isLoading)
-              Center(
-                child: Text(
-                  _secureData,
-                  style: TextStyle(fontSize: 16.0, color: Colors.red),
-                ),
-              ),
           ],
         ),
       ),

@@ -4,7 +4,7 @@ import '../models/user_model.dart';
 
 class UserRegistrationService {
   final String baseUrl =
-      'http://development.eba-avjg3zuv.eu-central-1.elasticbeanstalk.com/api/Registration';
+      'http://development.eba-pue89yyk.eu-central-1.elasticbeanstalk.com/api/Registration';
 
   Future<void> registerUser(UserModel user) async {
     final response = await http.post(

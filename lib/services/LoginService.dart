@@ -4,7 +4,7 @@ import 'dart:convert';
 
 class LoginService {
   final String baseUrl =
-      'http://development.eba-avjg3zuv.eu-central-1.elasticbeanstalk.com/api/Login';
+      'http://development.eba-pue89yyk.eu-central-1.elasticbeanstalk.com/api/Login';
   final FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
   Future<void> loginUser(String emailOrPhoneNumber, String password) async {

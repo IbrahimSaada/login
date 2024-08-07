@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:intl/intl.dart';
-import 'package:video_player/video_player.dart';
-import 'package:login2/home/contacts_page.dart'; // Import the contacts_page
+import 'dart:io'; // Import for File class
+import 'package:login2/home/contacts_page.dart'; // Import for Contact class
+import 'package:video_player/video_player.dart'; // Import package for playing videos
+import 'package:permission_handler/permission_handler.dart'; // Import for permissions
 
 class ChatPage extends StatefulWidget {
   final Contact contact;
@@ -16,73 +15,74 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
-  List<Map<String, dynamic>> messages = [];
-  FlutterSoundRecorder? _recorder;
-  bool _isRecording = false;
+  final List<Message> messages = [];
+  final TextEditingController _controller = TextEditingController();
+  final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
     super.initState();
-    _recorder = FlutterSoundRecorder();
-    _initializeRecorder();
+    _requestPermissions();
   }
 
-  Future<void> _initializeRecorder() async {
-    await _recorder!.openAudioSession();
-    if (await Permission.microphone.request().isGranted) {
-      print("Microphone permission granted");
+  void _requestPermissions() async {
+    var status = await [
+      Permission.photos,
+      Permission.microphone,
+      Permission.storage,
+    ].request();
+    if (status[Permission.photos]!.isDenied ||
+        status[Permission.microphone]!.isDenied ||
+        status[Permission.storage]!.isDenied) {
+      print('Permissions denied');
     }
   }
 
-  @override
-  void dispose() {
-    _recorder!.closeAudioSession();
-    super.dispose();
+  void _sendMessage() {
+    if (_controller.text.isEmpty) return;
+
+    setState(() {
+      messages.add(Message(
+        text: _controller.text,
+        sender: 'Me',
+        timestamp: DateTime.now().toString(),
+      ));
+    });
+
+    _controller.clear();
   }
 
-  Future<void> _pickMedia({required bool isVideo}) async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? media = await (isVideo
-        ? _picker.pickVideo(source: ImageSource.gallery)
-        : _picker.pickImage(source: ImageSource.gallery));
+  void _sendImage() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
 
-    if (media != null) {
+    if (image != null) {
+      print('Selected image path: ${image.path}');
       setState(() {
-        messages.add({
-          'text': null,
-          'image': isVideo ? null : media.path,
-          'video': isVideo ? media.path : null,
-          'date': DateTime.now(),
-          'isSentByMe': true,
-        });
-      });
-    }
-  }
-
-  Future<void> _recordVoice() async {
-    if (_isRecording) {
-      setState(() {
-        _isRecording = false;
-      });
-      String? filePath = await _recorder!.stopRecorder();
-      setState(() {
-        messages.add({
-          'text': null,
-          'audio': filePath,
-          'date': DateTime.now(),
-          'isSentByMe': true,
-        });
+        messages.add(Message(
+          imageUrl: image.path,
+          sender: 'Me',
+          timestamp: DateTime.now().toString(),
+        ));
       });
     } else {
-      var status = await Permission.microphone.request();
-      if (status != PermissionStatus.granted) {
-        // Handle the case when the user declines the microphone permission
-        return;
-      }
+      print('No image selected');
+    }
+  }
+
+  void _sendVideo() async {
+    final XFile? video = await _picker.pickVideo(source: ImageSource.gallery);
+
+    if (video != null) {
+      print('Selected video path: ${video.path}');
       setState(() {
-        _isRecording = true;
+        messages.add(Message(
+          videoUrl: video.path,
+          sender: 'Me',
+          timestamp: DateTime.now().toString(),
+        ));
       });
-      await _recorder!.startRecorder(toFile: 'audio_record.aac');
+    } else {
+      print('No video selected');
     }
   }
 
@@ -90,131 +90,125 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(widget.contact.imageUrl),
-              radius: 20.0,
-            ),
-            SizedBox(width: 10),
-            Text(widget.contact.name),
-          ],
-        ),
+        title: Text(widget.contact.name),
         backgroundColor: Colors.orange,
       ),
       body: Column(
         children: [
           Expanded(
             child: ListView.builder(
-              padding: EdgeInsets.all(8.0),
               itemCount: messages.length,
               itemBuilder: (context, index) {
-                final message = messages[index];
-                return Column(
-                  children: [
-                    if (index == 0 ||
-                        !isSameDay(
-                            messages[index - 1]['date'], message['date']))
-                      Text(
-                        DateFormat('yyyy-MM-dd').format(message['date']),
-                        style: TextStyle(
-                            color: Color.fromARGB(255, 158, 158, 158)),
-                      ),
-                    ChatMessage(
-                      text: message['text'],
-                      image: message['image'],
-                      video: message['video'],
-                      audio: message['audio'],
-                      isSentByMe: message['isSentByMe'],
-                    ),
-                  ],
-                );
+                return MessageCard(message: messages[index]);
               },
             ),
           ),
-          MessageComposer(
-            onSendMessage: (text) {
-              setState(() {
-                messages.add({
-                  'text': text,
-                  'image': null,
-                  'video': null,
-                  'audio': null,
-                  'date': DateTime.now(),
-                  'isSentByMe': true,
-                });
-              });
-            },
-            onPickImage: () => _pickMedia(isVideo: false),
-            onPickVideo: () => _pickMedia(isVideo: true),
-            onRecordVoice: _recordVoice,
-            isRecording: _isRecording,
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: Icon(Icons.photo, color: Colors.orange),
+                  onPressed: _sendImage,
+                ),
+                IconButton(
+                  icon: Icon(Icons.videocam, color: Colors.orange),
+                  onPressed: _sendVideo,
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(
+                      hintText: 'Type a message',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.grey[200],
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: Icon(Icons.send, color: Colors.orange),
+                  onPressed: _sendMessage,
+                ),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
-
-  bool isSameDay(DateTime date1, DateTime date2) {
-    return date1.year == date2.year &&
-        date1.month == date2.month &&
-        date1.day == date2.day;
-  }
 }
 
-class ChatMessage extends StatelessWidget {
+class Message {
   final String? text;
-  final String? image;
-  final String? video;
-  final String? audio;
-  final bool isSentByMe;
+  final String? imageUrl;
+  final String? videoUrl;
+  final String sender;
+  final String timestamp;
 
-  ChatMessage(
-      {this.text,
-      this.image,
-      this.video,
-      this.audio,
-      required this.isSentByMe});
+  Message({
+    this.text,
+    this.imageUrl,
+    this.videoUrl,
+    required this.sender,
+    required this.timestamp,
+  });
+}
+
+class MessageCard extends StatelessWidget {
+  final Message message;
+
+  MessageCard({required this.message});
 
   @override
   Widget build(BuildContext context) {
-    Widget messageContent;
-
-    if (text != null) {
-      messageContent = Text(
-        text!,
-        style: TextStyle(
-          color: isSentByMe ? Colors.white : Colors.black87,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+      child: Align(
+        alignment: message.sender == 'Me' ? Alignment.centerRight : Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: message.sender == 'Me' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+          children: [
+            if (message.timestamp != null)
+              Text(
+                message.timestamp.split(' ')[0], // Display date only
+                style: TextStyle(fontSize: 12.0, color: Colors.orange),
+              ),
+            if (message.text != null)
+              Container(
+                decoration: BoxDecoration(
+                  color: message.sender == 'Me' ? Colors.orange : Colors.grey[200],
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  message.text!,
+                  style: TextStyle(
+                    color: message.sender == 'Me' ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            if (message.imageUrl != null)
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Image.file(File(message.imageUrl!)),
+              ),
+            if (message.videoUrl != null)
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 5.0),
+                child: VideoPlayerWidget(videoUrl: message.videoUrl!), // Create a widget for video player
+              ),
+          ],
         ),
-      );
-    } else if (image != null) {
-      messageContent = Image.network(image!);
-    } else if (video != null) {
-      messageContent = VideoPlayerWidget(videoUrl: video!);
-    } else if (audio != null) {
-      messageContent = Icon(Icons.audiotrack,
-          color: isSentByMe ? Colors.white : Colors.black87);
-      // Add audio playback functionality here
-    } else {
-      messageContent = SizedBox.shrink();
-    }
-
-    return Align(
-      alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 4.0),
-        padding: EdgeInsets.all(8.0),
-        constraints: BoxConstraints(maxWidth: 250),
-        decoration: BoxDecoration(
-          color: isSentByMe ? Colors.orange : Colors.grey[300],
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: messageContent,
       ),
     );
   }
 }
 
+// Widget for playing video files using video_player package
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
 
@@ -226,15 +220,15 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
-    // ignore: deprecated_member_use
-    _controller = VideoPlayerController.network(widget.videoUrl)
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    _controller = VideoPlayerController.file(File(widget.videoUrl));
+    _initializeVideoPlayerFuture = _controller.initialize().catchError((error) {
+      print("Video initialization failed: $error");
+    });
   }
 
   @override
@@ -245,78 +239,20 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return _controller.value.isInitialized
-        ? AspectRatio(
+    return FutureBuilder(
+      future: _initializeVideoPlayerFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return AspectRatio(
             aspectRatio: _controller.value.aspectRatio,
             child: VideoPlayer(_controller),
-          )
-        : Center(child: CircularProgressIndicator());
-  }
-}
-
-class MessageComposer extends StatefulWidget {
-  final Function(String) onSendMessage;
-  final Function onPickImage;
-  final Function onPickVideo;
-  final Function onRecordVoice;
-  final bool isRecording;
-
-  MessageComposer({
-    required this.onSendMessage,
-    required this.onPickImage,
-    required this.onPickVideo,
-    required this.onRecordVoice,
-    required this.isRecording,
-  });
-
-  @override
-  _MessageComposerState createState() => _MessageComposerState();
-}
-
-class _MessageComposerState extends State<MessageComposer> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(Icons.photo, color: Colors.orange),
-            onPressed: widget.onPickImage as void Function()?,
-          ),
-          IconButton(
-            icon: Icon(Icons.videocam, color: Colors.orange),
-            onPressed: widget.onPickVideo as void Function()?,
-          ),
-          IconButton(
-            icon: Icon(widget.isRecording ? Icons.stop : Icons.mic,
-                color: Colors.orange),
-            onPressed: widget.onRecordVoice as void Function()?,
-          ),
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                hintText: "Type a message",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                ),
-                contentPadding: EdgeInsets.symmetric(horizontal: 16.0),
-              ),
-            ),
-          ),
-          SizedBox(width: 8.0),
-          IconButton(
-            icon: Icon(Icons.send, color: Colors.orange),
-            onPressed: () {
-              widget.onSendMessage(_controller.text);
-              _controller.clear();
-            },
-          ),
-        ],
-      ),
+          );
+        } else if (snapshot.hasError) {
+          return Center(child: Text('Error loading video: ${snapshot.error}'));
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
   }
 }

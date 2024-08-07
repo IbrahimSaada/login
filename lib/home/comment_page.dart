@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CommentPage extends StatelessWidget {
+  final int postId;
+
+  CommentPage({required this.postId});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -8,13 +12,17 @@ class CommentPage extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      debugShowCheckedModeBanner: false, // Add this line
-      home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
+      home: MyHomePage(postId: postId),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final int postId;
+
+  MyHomePage({required this.postId});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -39,8 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
       comment: 'Up',
       time: '1d',
     ),
-   
-  
     CommentItem(
       userImage: 'assets/chef.jpg',
       userName: 'Jana',
@@ -69,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('All comments'),
+        title: Text('All comments for post ${widget.postId}'),
       ),
       body: Stack(
         children: [
@@ -90,7 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       decoration: InputDecoration(
                         hintText: 'Write a public comment...',
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(50), // adjust the value to your liking
+                          borderRadius: BorderRadius.circular(
+                              50), // adjust the value to your liking
                         ),
                       ),
                     ),
@@ -172,7 +179,7 @@ class CommentItem extends StatelessWidget {
                     SizedBox(width: 8.0),
                     TextButton(
                       onPressed: () {},
-                      child: Text('Reply')
+                      child: Text('Reply'),
                     ),
                   ],
                 ),

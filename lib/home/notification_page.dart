@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(
     MaterialApp(
-      debugShowCheckedModeBanner: false, // Add this line to remove the debug watermark
+      debugShowCheckedModeBanner:
+          false, // Add this line to remove the debug watermark
       home: NotificationPage(),
     ),
   );
@@ -58,7 +59,8 @@ class _NotificationScreenState extends State<NotificationPage> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: NetworkImage(_notifications[index].profilePhoto),
+                          backgroundImage:
+                              NetworkImage(_notifications[index].profilePhoto),
                           radius: 20,
                         ),
                         SizedBox(width: 10),

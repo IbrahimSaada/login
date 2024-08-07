@@ -7,7 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       title: 'Add Friends',
       theme: ThemeData(
@@ -24,7 +23,6 @@ class AddFriendsPage extends StatefulWidget {
 }
 
 class _AddFriendsPageState extends State<AddFriendsPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +42,8 @@ class _AddFriendsPageState extends State<AddFriendsPage> {
         child: Column(
           children: [
             SizedBox(height: 20),
-            Expanded( // Wrap with Expanded
+            Expanded(
+              // Wrap with Expanded
               child: ListView.builder(
                 itemCount: 1, // Replace with actual data
                 itemBuilder: (context, index) {
@@ -98,23 +97,29 @@ class UserForm extends StatelessWidget {
               style: TextStyle(fontSize: 18),
             ),
             Spacer(),
-           ElevatedButton(
-  onPressed: onAdd,
-  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange), // Set button color to orange
-  child: Text(
-    'Add',
-    style: TextStyle(color: Colors.white), // Set text color to white (since button color is orange)
-  ),
-),
+            ElevatedButton(
+              onPressed: onAdd,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange), // Set button color to orange
+              child: Text(
+                'Add',
+                style: TextStyle(
+                    color: Colors
+                        .white), // Set text color to white (since button color is orange)
+              ),
+            ),
             SizedBox(width: 10),
             ElevatedButton(
-  onPressed: onRemove,
-  style: ElevatedButton.styleFrom(backgroundColor: Colors.orange), // Set button color to orange
-  child: Text(
-    'Remove',
-    style: TextStyle(color: Colors.white), // Set text color to white (since button color is orange)
-  ),
-),
+              onPressed: onRemove,
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.orange), // Set button color to orange
+              child: Text(
+                'Remove',
+                style: TextStyle(
+                    color: Colors
+                        .white), // Set text color to white (since button color is orange)
+              ),
+            ),
           ],
         ),
       ),

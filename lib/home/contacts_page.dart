@@ -64,7 +64,8 @@ class ContactsPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ChatPage(contact: contacts[index]),
+                        builder: (context) =>
+                            ChatPage(contact: contacts[index]),
                       ),
                     );
                   },

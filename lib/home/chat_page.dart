@@ -172,11 +172,10 @@ class MessageCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: message.sender == 'Me' ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
-            if (message.timestamp != null)
-              Text(
-                message.timestamp.split(' ')[0], // Display date only
-                style: TextStyle(fontSize: 12.0, color: Colors.orange),
-              ),
+            Text(
+              message.timestamp.split(' ')[0], // Display date only
+              style: TextStyle(fontSize: 12.0, color: Colors.orange),
+            ),
             if (message.text != null)
               Container(
                 decoration: BoxDecoration(

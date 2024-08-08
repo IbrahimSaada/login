@@ -42,4 +42,6 @@ class Post {
       profilePic: json['profile_pic'],
     );
   }
+
+  get age => null;
 }

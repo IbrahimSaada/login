@@ -12,7 +12,7 @@ dependencies:
   image_picker: ^1.1.2
   cached_network_image: ^3.0.0
   timeago: ^3.0.2
-  video_player: ^2.2.15
+  video_player: ^2.3.0  # Corrected to latest version
   animate_do: ^3.3.4
   shimmer: ^3.0.0
   flutter_sound: ^9.6.0
@@ -25,7 +25,7 @@ dependencies:
   form_builder_validators: ^11.0.0
   shared_preferences: ^2.0.6
   flutter_secure_storage: ^9.2.2
-  
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -6,8 +6,7 @@ import 'package:login2/home/add_friends_page.dart';
 import 'package:login2/home/contacts_page.dart';
 import 'package:login2/home/notification_page.dart';
 import 'package:login2/menu/menu_page.dart';
-import 'package:login2/services/SecureService.dart';
-import 'package:login2/home/full_screen_image_page.dart';
+
 import 'package:login2/home/comment_page.dart';
 import 'package:login2/services/post_service.dart'; // Import your service
 import 'package:login2/models/post_model.dart'; // Import your model
@@ -42,12 +41,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _postController = TextEditingController();
   int likeCount = 0;
   int commentCount = 0;
 
-  final SecureService _secureService = SecureService();
+  // ignore: unused_field
   String _secureData = "Loading...";
   List<Post> _posts = [];
   List<Story> _stories = [];
@@ -275,378 +273,72 @@ class _HomePageState extends State<HomePage> {
   Widget buildStoriesSection() {
     return Container(
       height: 220,
-      padding: EdgeInsets.symmetric(vertical: 10),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
+      color: Colors.grey[200],
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         itemCount: _stories.length,
         itemBuilder: (context, index) {
           final story = _stories[index];
           return Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.0),
             width: 120,
-            margin: EdgeInsets.only(right: 10),
-            child: Column(
+            child: Stack(
+              alignment: Alignment.center,
               children: [
-                Container(
-                  width: 110,
-                  height: 160,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: CachedNetworkImage(
-                          imageUrl: story.imageUrl,
-                          width: 110,
-                          height: 160,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Shimmer.fromColors(
-                            baseColor: Colors.grey[300]!,
-                            highlightColor: Colors.grey[100]!,
-                            child: Container(
-                              width: 110,
-                              height: 160,
-                              color: Colors.grey[300],
-                            ),
-                          ),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
-                        ),
+                CachedNetworkImage(
+                  imageUrl: story.imageUrl,
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
                       ),
-                      Positioned(
-                        top: 8,
-                        left: 8,
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: CircleAvatar(
-                            radius: 18,
-                            backgroundImage: NetworkImage(story.userImageUrl),
-                          ),
+                    ),
+                  ),
+                  placeholder: (context, url) => Shimmer.fromColors(
+                    baseColor: Colors.grey[300]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+                Positioned(
+                  bottom: 10.0,
+                  left: 10.0,
+                  right: 10.0,
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(story.userImageUrl),
+                      ),
+                      SizedBox(height: 4.0),
+                      Text(
+                        story.userName,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
                         ),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 5),
-                Text(
-                  story.userName,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
           );
         },
-      ),
-    );
-  }
-
-  Widget buildSkeletonStoriesSection() {
-    return Container(
-      height: 220,
-      padding: EdgeInsets.symmetric(vertical: 10),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: 5,
-        itemBuilder: (context, index) {
-          return Container(
-            width: 120,
-            margin: EdgeInsets.only(right: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.grey[300],
-            ),
-            child: Shimmer.fromColors(
-              baseColor: Colors.grey[300]!,
-              highlightColor: Colors.grey[100]!,
-              child: Container(
-                width: 110,
-                height: 160,
-                color: Colors.grey[300],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget buildPostInputSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(30.0),
-          border: Border.all(color: Colors.grey[300]!),
-        ),
-        child: Row(
-          children: [
-            IconButton(
-              icon: Icon(Icons.camera_alt, color: Colors.orange),
-              onPressed: () {
-                // Handle camera action
-              },
-            ),
-            Expanded(
-              child: TextFormField(
-                controller: _postController,
-                decoration: InputDecoration(
-                  hintText: 'What do you want to share...',
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.edit, color: Colors.orange),
-              onPressed: () {
-                // Handle edit action
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildSkeletonShareSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: Container(
-          height: 60.0,
-          decoration: BoxDecoration(
-            color: Colors.grey[300],
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildSkeletonPostSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildSkeletonPost(),
-          SizedBox(height: 16.0),
-          buildSkeletonPostWithCaption(),
-          SizedBox(height: 16.0),
-          buildSkeletonCaptionOnlyPost(),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSkeletonPost() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey[300],
-                radius: 25,
-              ),
-              SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                  SizedBox(height: 5),
-                  Container(
-                    width: 50,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                ],
-              ),
-              Spacer(),
-              Icon(Icons.more_vert, color: Colors.grey[300]),
-            ],
-          ),
-          SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            height: 150,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(Icons.favorite, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.comment, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.share, color: Colors.grey[300]),
-              Spacer(),
-              Icon(Icons.bookmark, color: Colors.grey[300]),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSkeletonPostWithCaption() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey[300],
-                radius: 25,
-              ),
-              SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                  SizedBox(height: 5),
-                  Container(
-                    width: 50,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                ],
-              ),
-              Spacer(),
-              Icon(Icons.more_vert, color: Colors.grey[300]),
-            ],
-          ),
-          SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 5),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 5),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            height: 150,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(Icons.favorite, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.comment, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.share, color: Colors.grey[300]),
-              Spacer(),
-              Icon(Icons.bookmark, color: Colors.grey[300]),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildSkeletonCaptionOnlyPost() {
-    return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.grey[300],
-                radius: 25,
-              ),
-              SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 100,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                  SizedBox(height: 5),
-                  Container(
-                    width: 50,
-                    height: 10,
-                    color: Colors.grey[300],
-                  ),
-                ],
-              ),
-              Spacer(),
-              Icon(Icons.more_vert, color: Colors.grey[300]),
-            ],
-          ),
-          SizedBox(height: 16.0),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 5),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 5),
-          Container(
-            width: double.infinity,
-            height: 20,
-            color: Colors.grey[300],
-          ),
-          SizedBox(height: 16.0),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Icon(Icons.favorite, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.comment, color: Colors.grey[300]),
-              SizedBox(width: 16.0),
-              Icon(Icons.share, color: Colors.grey[300]),
-              Spacer(),
-              Icon(Icons.bookmark, color: Colors.grey[300]),
-            ],
-          ),
-        ],
       ),
     );
   }
@@ -699,13 +391,11 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           SizedBox(height: 16.0),
-          Text(
-            post.caption ?? '',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Colors.black87,
-            ),
-          ),
+
+          // Add the text widget with see more / show less functionality
+          ExpandableText(post.caption),
+
+          // ignore: unnecessary_null_comparison
           if (post.mediaUrl != null)
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
@@ -718,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.network(
-                    post.mediaUrl!,
+                    post.mediaUrl,
                     fit: BoxFit.cover,
                     width: double.infinity,
                   ),
@@ -769,31 +459,107 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget buildPostInputSection() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://via.placeholder.com/50'), // Placeholder profile image
+              ),
+              SizedBox(width: 8.0),
+              Expanded(
+                child: TextField(
+                  controller: _postController,
+                  decoration: InputDecoration(
+                    hintText: "What's on your mind?",
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              IconButton(
+                icon: Icon(Icons.send, color: Colors.orange),
+                onPressed: () {
+                  // Handle post submission
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: buildAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Divider(
-              thickness: 2,
-              color: Colors.grey[300],
-              height: 1,
-            ),
-            _isLoading ? buildSkeletonStoriesSection() : buildStoriesSection(),
-            Divider(thickness: 1, color: Colors.grey[300]), // Separator
-            buildPostInputSection(),
-            Divider(thickness: 1, color: Colors.grey[300]), // Removed extra line
-            _isLoading
-                ? buildSkeletonPostSection()
-                : Column(
-                    children: _posts.map((post) => buildPost(post)).toList(),
+      body: _isLoading
+          ? Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  buildPostInputSection(),
+                  buildStoriesSection(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: _posts.length,
+                    itemBuilder: (context, index) {
+                      return buildPost(_posts[index]);
+                    },
                   ),
-            SizedBox(height: 16.0),
-          ],
+                ],
+              ),
+            ),
+    );
+  }
+}
+
+// Custom widget for expandable text
+// Custom widget for expandable text
+class ExpandableText extends StatefulWidget {
+  final String text;
+
+  ExpandableText(this.text);
+
+  @override
+  _ExpandableTextState createState() => _ExpandableTextState();
+}
+
+class _ExpandableTextState extends State<ExpandableText> {
+  bool isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final maxLines = isExpanded ? null : 2;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          widget.text,
+          style: TextStyle(fontSize: 14.0, color: Colors.black87),
+          overflow: TextOverflow.ellipsis,
+          maxLines: maxLines,
         ),
-      ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              isExpanded = !isExpanded;
+            });
+          },
+          child: Text(
+            isExpanded ? 'show more' : 'show less',
+            style: TextStyle(color: Colors.orange),
+          ),
+        ),
+      ],
     );
   }
 }

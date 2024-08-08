@@ -505,8 +505,9 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildPostInputSection(),
+                  
                   buildStoriesSection(),
+                  buildPostInputSection(),
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),

@@ -460,37 +460,40 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget buildPostInputSection() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      color: Colors.white,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://via.placeholder.com/50'), // Placeholder profile image
-              ),
-              SizedBox(width: 8.0),
-              Expanded(
-                child: TextField(
-                  controller: _postController,
-                  decoration: InputDecoration(
-                    hintText: "What's on your mind?",
-                    border: InputBorder.none,
-                  ),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(30.0),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.camera_alt, color: Colors.orange),
+              onPressed: () {
+                // Handle camera action
+              },
+            ),
+            Expanded(
+              child: TextFormField(
+                controller: _postController,
+                decoration: InputDecoration(
+                  hintText: 'What do you want to share...',
+                  border: InputBorder.none,
                 ),
               ),
-              IconButton(
-                icon: Icon(Icons.send, color: Colors.orange),
-                onPressed: () {
-                  // Handle post submission
-                },
-              ),
-            ],
-          ),
-        ],
+            ),
+            IconButton(
+              icon: Icon(Icons.edit, color: Colors.orange),
+              onPressed: () {
+                // Handle edit action
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -505,7 +508,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   buildStoriesSection(),
                   buildPostInputSection(),
                   ListView.builder(
